@@ -1,88 +1,72 @@
-### Architecture SASS
+### SASS Architecture
 
-Le thème utilise une architecture SASS modulaire :
+A modern and optimized WordPress theme :
 
-- `abstracts/` : Fonctions, mixins et variables
-- `base/` : Styles de base et reset
-- `components/` : Composants réutilisables
-- `templates/` : Styles spécifiques aux templates
-- `utilities/` : Classes utilitaires
-- `variables/` : Variables globales et configuration
+- `abstracts/` : Functions, mixins and variables
+- `base/` : Basic styles and reset
+- `components/` : Reusable components
+- `templates/` : Template-specific styles
+- `utilities/` : Utility classes
+- `variables/` : Global variables and configuration
 
-## Personnalisation
+## Customization
 
-### Variables SASS
+### SASS Variables
 
-Les variables principales peuvent être modifiées dans les fichiers :
+The main variables can be modified in the files :
 
-- `_variables.scss` : Configuration globale
-- `variables/_colors.scss` : Couleurs
-- `variables/_typography.scss` : Typographie
-- `variables/_layout.scss` : Mise en page
-- `variables/_spacing.scss` : Espacements
+- `_variables.scss` : Global configuration
+- `variables/_colors.scss` : Colors
+- `variables/_typography.scss` : Typography
+- `variables/_layout.scss` : Layout
+- `variables/_spacing.scss` : Spacing
 
 ### Customizer
 
-Le thème supporte la personnalisation via le Customizer WordPress :
+Theme supports customization via the WordPress Customizer :
 
-- Logo personnalisé
-- Couleurs du thème
-- Options de mise en page
+- Custom Logo
+- Theme Colors
+- Layout Options
 - Widgets
-- Copyright du footer
+- Footer Copyright
 
-## Standards de code
+## Coding Standards
 
-- PHP : WordPress Coding Standards
-- SCSS : Stylelint avec configuration standard
-- JavaScript : ESLint avec configuration WordPress
-- BEM pour la nomenclature CSS
-- Composants modulaires et réutilisables
+- PHP: WordPress Coding Standards
+- SCSS: Stylelint with standard configuration
+- JavaScript: ESLint with WordPress configuration
+- BEM for CSS nomenclature
+- Modular and reusable components
 
-## Support Navigateurs
+## Browser Support
 
-- Chrome (dernières versions)
-- Firefox (dernières versions)
-- Safari (dernières versions)
-- Edge (dernières versions)
-- IE11 (support basique)
+- Chrome (latest versions)
+- Firefox (latest versions)
+- Safari (latest versions)
+- Edge (latest versions)
+- IE11 (basic support)
 
 ## Performance
 
-- Chargement différé des images
-- Minification CSS et JS
-- Architecture modulaire pour éviter la duplication
-- Optimisation des assets
-- Support des polices système
+- Lazy image loading
+- CSS and JS minification
+- Modular architecture to avoid duplication
+- Asset optimization
+- System font support
 
 ## Contribution
 
-Veuillez consulter [CONTRIBUTING.md](CONTRIBUTING.md) pour les détails sur notre code de conduite et le processus de soumission des pull requests.
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and pull request submission process.
 
 ## Changelog
 
 ### 1.0.0
 
-- Version initiale
-- Structure SASS moderne
-- Support complet des fonctionnalités WordPress
-- Menu responsive
-- Support RTL
-- Intégration ESLint et Stylelint
-- Configuration Husky
-
-## Crédits
-
-- [Normalize.css](https://necolas.github.io/normalize.css/), (C) 2012-2018 Nicolas Gallagher and Jonathan Neal, [MIT](https://opensource.org/licenses/MIT)
-
-## Licence
-
-Ce thème est sous licence GPL v2 ou ultérieure - voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## Auteur
-
-[SamuraiSyntax](https://github.com/SamuraiSyntax)
-
-## Contributeurs
-
-- [@SamuraiSyntax](https://github.com/SamuraiSyntax)
+- Initial release
+- Modern SASS framework
+- Full WordPress feature support
+- Responsive menu
+- RTL support
+- ESLint and Stylelint integration
+- Husky configuration
