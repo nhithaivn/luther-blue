@@ -1,0 +1,43 @@
+@use "../../variables" as *;
+@use "submenu" as sub;
+
+@mixin styles {
+  position: relative;
+  margin-right: $spacing-lg;
+
+  @media (max-width: $breakpoint-md) {
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  > a {
+    display: block;
+    padding: $spacing-sm;
+    color: $color-dark;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    @media (max-width: $breakpoint-md) {
+      padding: $spacing-md;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  /* Sous-menus */
+  .sub-menu {
+    @include sub.styles;
+  }
+
+  &:hover > .sub-menu {
+    @media (min-width: $breakpoint-md) {
+      display: block;
+    }
+  }
+}

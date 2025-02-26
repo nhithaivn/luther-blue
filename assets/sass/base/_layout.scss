@@ -1,0 +1,60 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+/* Layout de base */
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: map.get($colors, 'pale');
+}
+
+.site-content {
+  flex: 1 0 auto;
+  padding: var(--spacing-xl) 0;
+
+  @media (max-width: 768px) {
+    padding: var(--spacing-lg);
+  }
+}
+
+.site-main {
+  margin-bottom: var(--spacing-xl);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Layout avec sidebar */
+.content-sidebar {
+  display: grid;
+  gap: var(--grid-gap);
+
+  @media (min-width: 768px) {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Sections */
+.section {
+  padding: var(--spacing-xl) 0;
+
+  &--small {
+    padding: var(--spacing-lg) 0;
+  }
+
+  &--large {
+    padding: calc(var(--spacing-xl) * 2) 0;
+  }
+
+  &--gray {
+    background-color: var(--color-background-alt);
+  }
+}
+
+/* Espacement vertical entre les sections */
+.section+.section {
+  margin-top: var(--spacing-xl);
+}

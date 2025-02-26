@@ -1,0 +1,214 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:color';
+
+// Hide visually while keeping it accessible to screen readers
+.visually-hidden,
+.screen-reader-text {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+
+  &:focus {
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    clip: auto !important;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #fff;
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: normal;
+    text-decoration: none;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.15);
+    z-index: 100000;
+  }
+}
+
+// Skip links
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  z-index: 100001;
+  background: map.get($colors, 'primary');
+  color: map.get($colors, 'white');
+  padding: map.get($spacers, 2) map.get($spacers, 3);
+  text-decoration: none;
+  transition: top 0.2s ease-in-out;
+
+  &:focus {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    z-index: 100000;
+  }
+}
+
+// Focus visible
+.focus-visible,
+:focus-visible {
+  outline: 2px solid map.get($colors, 'primary');
+  outline-offset: 2px;
+}
+
+// Reduce animations if user prefers
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .dark-mode {
+    --color-text: #{map.get($colors, 'gray', 200)};
+    --color-background: #{map.get($colors, 'gray', 900)};
+    --color-primary: #{color.adjust(map.get($colors, 'primary'), $lightness: 10%)};
+
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    a {
+      color: var(--color-primary);
+
+      @include hover {
+        color: color.adjust(map.get($colors, 'primary'), $lightness: 20%);
+      }
+    }
+
+    .card,
+    .form-control,
+    .btn-outline-primary {
+      background-color: color.adjust(map.get($colors, 'gray', 900), $lightness: 5%);
+      border-color: map.get($colors, 'gray', 700);
+    }
+  }
+}
+
+// Keyboard navigation support
+[tabindex='-1'] {
+  outline: none !important;
+}
+
+// Improved accessibility of forms
+input,
+textarea,
+select,
+button {
+  &:focus {
+    outline: 2px solid map.get($colors, 'primary');
+    outline-offset: 2px;
+  }
+}
+
+// Improved contrasts
+.high-contrast {
+  --color-text: #{map.get($colors, 'black')};
+  --color-background: #{map.get($colors, 'white')};
+  --color-primary: #{color.adjust(map.get($colors, 'primary'), $saturation: -20%)};
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  a {
+    text-decoration: underline;
+
+    @include hover {
+      text-decoration: none;
+    }
+  }
+
+  .btn {
+    border-width: 2px;
+  }
+
+  .form-control {
+    border-width: 2px;
+  }
+}
+
+/* Accessibility Utilities */
+
+/* Text meant only for screen readers */
+.screen-reader-text {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+
+  &:focus {
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    clip: auto !important;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #fff;
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: normal;
+    text-decoration: none;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.15);
+    z-index: 100000;
+  }
+}
+
+/* Skip links */
+.skip-link {
+  &:focus {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    z-index: 100000;
+  }
+}
+
+/* Focus styles */
+:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode */
+@media screen and (-ms-high-contrast: active) {
+  * {
+    border-color: currentColor;
+  }
+}

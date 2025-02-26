@@ -1,0 +1,421 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:color';
+
+// Local variables
+$page-max-width: 1200px;
+$content-max-width: 800px;
+
+.page-article {
+  width: 100%;
+  margin: 0 auto;
+  max-width: $page-max-width;
+}
+
+.page-header {
+  position: relative;
+  margin-bottom: map.get($spacers, 6);
+
+  &__media {
+    position: relative;
+    height: 30vh;
+    min-height: 200px;
+    overflow: hidden;
+    border-radius: map.get($border-radius, 'lg');
+
+    @include breakpoint('md') {
+      height: 40vh;
+      min-height: 300px;
+    }
+
+    @include breakpoint('lg') {
+      height: 50vh;
+      min-height: 400px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    @include hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        rgba(map.get($colors, 'gray', 900), 0.2),
+        rgba(map.get($colors, 'gray', 900), 0.6));
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    padding: map.get($spacers, 4);
+    margin-top: -#{map.get($spacers, 8)};
+    background: map.get($colors, 'white');
+    border-radius: map.get($border-radius, 'xl');
+    box-shadow: map.get($shadows, 'lg');
+    text-align: center;
+
+    @include breakpoint('md') {
+      padding: map.get($spacers, 6);
+      margin: -#{map.get($spacers, 12)} map.get($spacers, 8) 0;
+    }
+  }
+}
+
+.page-title {
+  @include font-size('2xl');
+  font-weight: 700;
+  color: map.get($colors, 'gray', 900);
+  margin-bottom: map.get($spacers, 3);
+
+  @include breakpoint('md') {
+    @include font-size('4xl');
+  }
+
+  @include breakpoint('lg') {
+    @include font-size('5xl');
+  }
+}
+
+.page-description {
+  @include font-size('lg');
+  color: map.get($colors, 'gray', 600);
+  max-width: 600px;
+  margin: 0 auto map.get($spacers, 4);
+  line-height: 1.6;
+}
+
+.page-cta {
+  margin-top: map.get($spacers, 4);
+}
+
+.entry-content {
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding: map.get($spacers, 4);
+  @include font-size('base');
+  line-height: 1.8;
+
+  @include breakpoint('md') {
+    padding: map.get($spacers, 6);
+    @include font-size('lg');
+  }
+
+  >* {
+    margin-bottom: map.get($spacers, 4);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Styles for Gutenberg Blocksg
+  .wp-block-image {
+    margin: map.get($spacers, 6) 0;
+
+    img {
+      border-radius: map.get($border-radius, 'lg');
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+
+      @include hover {
+        transform: scale(1.02);
+      }
+    }
+
+    figcaption {
+      text-align: center;
+      @include font-size('sm');
+      color: map.get($colors, 'gray', 600);
+      margin-top: map.get($spacers, 2);
+    }
+  }
+
+  .wp-block-gallery {
+    margin: map.get($spacers, 6) 0;
+
+    @include breakpoint('md') {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: map.get($spacers, 4);
+    }
+  }
+
+  .wp-block-quote {
+    margin: map.get($spacers, 6) 0;
+    padding: map.get($spacers, 6);
+    background: map.get($colors, 'gray', 50);
+    border-left: 4px solid map.get($colors, 'primary');
+    border-radius: map.get($border-radius, 'lg');
+    @include font-size('xl');
+    font-style: italic;
+
+    cite {
+      display: block;
+      margin-top: map.get($spacers, 3);
+      @include font-size('base');
+      color: map.get($colors, 'gray', 600);
+      font-style: normal;
+    }
+  }
+}
+
+// Navigation between pages
+.page-navigation {
+  margin-top: map.get($spacers, 8);
+
+  &__inner {
+    gap: map.get($spacers, 4);
+    @include flex(column, center, stretch);
+
+    @include breakpoint('md') {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__link {
+    gap: map.get($spacers, 3);
+    text-decoration: none;
+    padding: map.get($spacers, 4);
+    background: map.get($colors, 'white');
+    border-radius: map.get($border-radius, 'lg');
+    box-shadow: map.get($shadows, 'sm');
+    transition: all 0.3s ease;
+    @include flex(row, flex-start, center);
+
+    @include hover {
+      transform: translateY(-2px);
+      box-shadow: map.get($shadows, 'md');
+    }
+
+    &--prev {
+      @include breakpoint('md') {
+        margin-right: auto;
+      }
+    }
+
+    &--next {
+      flex-direction: row-reverse;
+
+      @include breakpoint('md') {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__text {
+    @include flex(column, center, flex-start);
+  }
+
+  &__label {
+    @include font-size('sm');
+    color: map.get($colors, 'gray', 600);
+  }
+
+  &__title {
+    font-weight: 500;
+    color: map.get($colors, 'gray', 900);
+    @include truncate(1);
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    color: map.get($colors, 'primary');
+    transition: transform 0.2s ease;
+
+    .page-navigation__link:hover & {
+      transform: translateX(4px);
+
+      .page-navigation__link--prev & {
+        transform: translateX(-4px);
+      }
+    }
+  }
+}
+
+// Adding styles for breadcrumb
+.breadcrumb {
+  margin: map.get($spacers, 4) 0;
+  padding: map.get($spacers, 2) map.get($spacers, 4);
+  font-size: map.get($font-sizes, 'sm');
+  color: map.get($colors, 'gray', 600);
+  background-color: map.get($colors, 'gray', 50);
+  border-radius: map.get($border-radius, 'lg');
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: map.get($spacers, 2);
+
+  a {
+    color: map.get($colors, 'primary');
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      color: map.get($colors, 'primary-dark');
+      text-decoration: underline;
+    }
+
+    &:not(:last-child)::after {
+      content: '/';
+      margin-left: map.get($spacers, 2);
+      color: map.get($colors, 'gray', 400);
+      text-decoration: none;
+      display: inline-block;
+    }
+  }
+
+  span {
+    color: map.get($colors, 'gray', 700);
+    font-weight: 500;
+  }
+
+  @include breakpoint('md') {
+    margin: map.get($spacers, 6) 0 map.get($spacers, 4);
+    padding: map.get($spacers, 3) map.get($spacers, 6);
+  }
+}
+
+/* Page Styles */
+.page {
+  &-header {
+    margin-bottom: var(--spacing-xl);
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .page-description {
+      margin-top: var(--spacing-md);
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+    }
+  }
+
+  &-content {
+    margin-bottom: var(--spacing-xl);
+
+    >* {
+      margin-bottom: var(--spacing-md);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    /* Block layout */
+    .wp-block-columns {
+      display: flex;
+      gap: var(--grid-gap);
+      margin-bottom: var(--spacing-xl);
+
+      @media (max-width: 781px) {
+        flex-direction: column;
+      }
+    }
+
+    .wp-block-column {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Full width images */
+    .alignfull {
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      max-width: 100vw;
+      width: 100vw;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    /* Wide images */
+    .alignwide {
+      margin-left: -10%;
+      margin-right: -10%;
+      max-width: 120%;
+      width: 120%;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    /* Cover */
+    .wp-block-cover {
+      padding: var(--spacing-xl) var(--container-padding);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      background-size: cover;
+      background-position: center;
+
+      &.has-background-dim::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+
+      .wp-block-cover__inner-container {
+        position: relative;
+        z-index: 2;
+        max-width: var(--container-width);
+        width: 100%;
+      }
+    }
+  }
+
+  /* Child Page Navigation */
+  &-children {
+    margin: var(--spacing-xl) 0;
+    padding: 0;
+    list-style: none;
+
+    .page_item {
+      margin-bottom: var(--spacing-sm);
+
+      a {
+        color: var(--color-text);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+}

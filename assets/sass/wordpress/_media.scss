@@ -1,0 +1,56 @@
+/* WordPress Media Styles */
+.wp-caption {
+  max-width: 100%;
+  margin-bottom: var(--spacing-md);
+
+  img {
+    display: block;
+    margin: 0;
+  }
+}
+
+.wp-caption-text {
+  margin: var(--spacing-xs) 0 0;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+/* Images responsives */
+.size {
+  &-auto {
+    max-width: 100%;
+    height: auto;
+  }
+
+  &-full {
+    width: 100%;
+    height: auto;
+  }
+
+  &-large {
+    max-width: 1024px;
+    height: auto;
+  }
+
+  &-medium {
+    max-width: 768px;
+    height: auto;
+  }
+
+  &-thumbnail {
+    max-width: 150px;
+    height: auto;
+  }
+}
+
+/* Featured images */
+.post-thumbnail {
+  margin-bottom: var(--spacing-lg);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}

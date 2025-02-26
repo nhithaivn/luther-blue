@@ -1,0 +1,96 @@
+/*!
+Theme Name: Wordpress Luther Blue
+Theme URI: https://github.com/nhithaivn/luther-blue
+Author: Nhi Thai
+Author URI: https://nhidev.vercel.app/
+Description:A modern and optimized WordPress theme
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: wp-luther-blue
+*/
+
+/* Built-in Sass Modules */
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+
+/* Variables */
+@use 'variables/colors' as colors-vars;
+@use 'variables/typography' as type-vars;
+@use 'variables/layout' as layout-vars;
+
+/* Abstracts */
+@use 'abstracts/functions' as func;
+@use 'abstracts/mixins' as mix;
+@use 'abstracts/variables' as vars;
+
+/* Base */
+@use 'base/reset';
+@use 'base/typography' as type;
+@use 'base/grid';
+@use 'base/layout';
+
+/* Components */
+@use 'components/buttons';
+@use 'components/forms';
+@use 'components/header';
+@use 'components/navigation';
+@use 'components/footer';
+@use 'components/cards';
+@use 'components/pagination';
+@use 'components/widgets';
+@use 'components/comments';
+
+/* Templates */
+@use 'templates/archive';
+@use 'templates/single';
+@use 'templates/page';
+@use 'templates/error';
+@use 'templates/search';
+
+/* Utilities */
+@use 'utilities/helpers';
+@use 'utilities/accessibility';
+
+/* WordPress Core */
+@use 'wordpress/alignment';
+@use 'wordpress/media';
+@use 'wordpress/captions';
+@use 'wordpress/galleries';
+
+// Utilities
+.container {
+  @include mix.container;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.visually-hidden {
+  @include mix.visually-hidden;
+}
+
+// Native WordPress Styles
+.alignleft {
+  float: left;
+  margin-right: map.get(vars.$spacers, 3);
+}
+
+.alignright {
+  float: right;
+  margin-left: map.get(vars.$spacers, 3);
+}
+
+.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Responsive images
+img {
+  max-width: 100%;
+  height: auto;
+}

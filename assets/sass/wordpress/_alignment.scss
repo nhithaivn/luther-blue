@@ -1,0 +1,51 @@
+/* WordPress Alignment Classes */
+.alignnone {
+  margin: var(--spacing-md) 0;
+}
+
+.aligncenter,
+div.aligncenter {
+  display: block;
+  margin: var(--spacing-md) auto;
+}
+
+.alignright {
+  float: right;
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-md);
+}
+
+.alignleft {
+  float: left;
+  margin: var(--spacing-sm) var(--spacing-md) var(--spacing-md) 0;
+}
+
+/* Clear for floating elements */
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Support for aligned blocks */
+.wp-block-image {
+  &.alignfull {
+    margin-left: calc(-100vw / 2 + 100% / 2);
+    margin-right: calc(-100vw / 2 + 100% / 2);
+    max-width: 100vw;
+    width: 100vw;
+  }
+
+  &.alignwide {
+    margin-left: -10%;
+    margin-right: -10%;
+    max-width: 120%;
+    width: 120%;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}

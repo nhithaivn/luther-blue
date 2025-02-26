@@ -1,0 +1,160 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:color';
+
+body {
+  font-family: map.get($font-families, 'base');
+  font-size: map.get($font-sizes, 'base');
+  line-height: map.get($line-heights, 'normal');
+  color: map.get($colors, 'gray', 800);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-headings);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+h5 {
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+}
+
+h6 {
+  font-size: clamp(1rem, 1vw, 1.25rem);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: var(--transition-base);
+
+  @include hover {
+    color: var(--color-primary-dark, #cf6611);
+    text-decoration: underline;
+  }
+
+  @include focus-visible {
+    text-decoration: underline;
+    outline-offset: 2px;
+  }
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+code,
+pre {
+  font-family: map.get($font-families, 'monospace');
+  font-size: 0.875em;
+}
+
+pre {
+  padding: map.get($spacers, 3);
+  margin: map.get($spacers, 4) 0;
+  overflow: auto;
+  background: map.get($colors, 'gray', 100);
+  border-radius: map.get($border-radius, 'md');
+}
+
+// Styles de texte utilitaires
+.text-small {
+  font-size: map.get($font-sizes, 'sm');
+}
+
+.text-large {
+  font-size: map.get($font-sizes, 'lg');
+}
+
+.text-muted {
+  color: map.get($colors, 'gray', 600);
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.font-weight-normal {
+  font-weight: 400;
+}
+
+.font-italic {
+  font-style: italic;
+}
+
+// Listes
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: map.get($spacers, 3);
+  padding-left: map.get($spacers, 4);
+
+  ul,
+  ol {
+    margin-bottom: 0;
+  }
+}
+
+// Citations
+blockquote {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-left: 4px solid var(--color-primary);
+  font-style: italic;
+  background-color: var(--color-background-alt, #f8f9fa);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  cite {
+    display: block;
+    margin-top: var(--spacing-sm);
+    font-size: 0.875em;
+    font-style: normal;
+    color: var(--color-text-light, #6c757d);
+  }
+}

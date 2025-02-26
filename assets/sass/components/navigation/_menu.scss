@@ -1,0 +1,104 @@
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+
+.main-navigation {
+  position: relative;
+  z-index: map.get($z-indices, 'dropdown');
+
+  .nav-menu {
+    @include flex(row, flex-start, center, nowrap, map.get($spacers, 3));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include breakpoint('md', 'max') {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: map.get($colors, 'white');
+      padding: map.get($spacers, 3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &.is-active {
+        display: flex;
+      }
+    }
+  }
+
+  .menu-item {
+    position: relative;
+
+    > a {
+      display: block;
+      padding: map.get($spacers, 2);
+      color: map.get($colors, 'dark');
+      text-decoration: none;
+      font-size: map.get($font-sizes, 'base');
+      @include transition('base');
+
+      @include hover {
+        color: map.get($colors, 'primary');
+      }
+    }
+
+    &.current-menu-item > a {
+      color: map.get($colors, 'primary');
+      font-weight: 500;
+    }
+  }
+
+  .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: map.get($colors, 'white');
+    padding: map.get($spacers, 2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: map.get($border-radius, 'md');
+
+    @include breakpoint('md', 'max') {
+      position: static;
+      box-shadow: none;
+      padding-left: map.get($spacers, 3);
+    }
+
+    .menu-item {
+      width: 100%;
+
+      > a {
+        padding: map.get($spacers, 2);
+      }
+    }
+  }
+
+  .menu-item:hover > .sub-menu {
+    display: block;
+  }
+}
+
+// Bouton menu mobile
+.menu-toggle {
+  @include button-base;
+  display: none;
+  width: 100%;
+  background: map.get($colors, 'primary');
+  color: map.get($colors, 'white');
+
+  @include breakpoint('md', 'max') {
+    display: flex;
+  }
+
+  &::after {
+    content: '☰';
+    margin-left: map.get($spacers, 2);
+  }
+
+  &.is-active::after {
+    content: '×';
+  }
+}

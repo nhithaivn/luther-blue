@@ -1,0 +1,103 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:math';
+
+/* Système de grille moderne avec CSS Grid */
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+
+  &--2-cols {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+
+  &--3-cols {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+
+  &--4-cols {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  }
+
+  &--auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-column-width, 15rem), 1fr));
+  }
+
+  &--auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width, 15rem), 1fr));
+  }
+}
+
+.flex {
+  display: flex;
+  gap: var(--grid-gap);
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &--column {
+    flex-direction: column;
+  }
+}
+
+/* Conteneur responsive */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: map.get($grid, 'container', 'padding');
+  padding-left: map.get($grid, 'container', 'padding');
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: calc(-1 * #{map.get($grid, 'gutter')});
+  margin-left: calc(-1 * #{map.get($grid, 'gutter')});
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  padding-right: map.get($grid, 'gutter');
+  padding-left: map.get($grid, 'gutter');
+}
+
+@each $breakpoint, $width in map.get($grid, 'container', 'max-width') {
+  @include breakpoint($breakpoint) {
+    .col-#{$breakpoint} {
+      flex-basis: 0;
+      flex-grow: 1;
+      max-width: 100%;
+    }
+
+    @for $i from 1 through map.get($grid, 'columns') {
+      .col-#{$breakpoint}-#{$i} {
+        $width: math.percentage(math.div($i, map.get($grid, 'columns')));
+        flex: 0 0 $width;
+        max-width: $width;
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:color';
+
+// Convert px to rem
+@function rem($size) {
+  $remSize: strip-unit($size) / 16;
+  @return #{$remSize}rem;
+}
+
+// Getting a nested map value safely
+@function deep-map-get($map, $keys...) {
+  @each $key in $keys {
+    @if not map.has-key($map, $key) {
+      @warn "This key `#{$key}` does not exist in the map.";
+      @return null;
+    }
+
+    $map: map.get($map, $key);
+  }
+
+  @return $map;
+}
+
+// Adjust the brightness of a color safely
+@function adjust-color-brightness($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
+
+// Convert a color to RGB/RGBA
+@function to-rgb($color, $opacity: 1) {
+  @return rgba(color.red($color), color.green($color), color.blue($color), $opacity);
+}
+
+// Check if a color is light or dark
+@function is-light($color) {
+  $luminance: (
+    color.red($color) * 0.299 + color.green($color) * 0.587 + color.blue($color) * 0.114) / 255;
+  @return $luminance >0.5;
+}
+
+// Get a contrasting color
+@function contrast-color($color) {
+  @return if(is-light($color), #000000, #ffffff
+);
+}
+
+// Convert a string to kebab-case
+@function to-kebab-case($string) {
+  $result: string.to-lower-case($string);
+  $result: string.replace($result, ' ', '-');
+  @return $result;
+}
+
+@function strip-unit($number) {
+  @if type-of($number)=='number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function em($size, $context: 16) {
+  $emSize: strip-unit($size) / strip-unit($context);
+  @return #{$emSize}em;
+}

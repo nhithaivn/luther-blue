@@ -1,0 +1,138 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:color';
+
+/* Widget Styles */
+.widget {
+  margin-bottom: var(--spacing-lg);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Widget Title */
+  &-title {
+    margin: 0 0 var(--spacing-md);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* Default list */
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--color-border, #dee2e6);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
+      transition: var(--transition-base);
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  /* Search Widget */
+  &_search {
+    .search-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .search-field {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  /* Categories Widget */
+  &_categories {
+    ul {
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .count {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        background-color: var(--color-background-alt, #f8f9fa);
+        padding: 0.25rem 0.5rem;
+        border-radius: 999px;
+      }
+    }
+  }
+
+  /* Recent Posts Widget */
+  &_recent_entries {
+    .post-date {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      margin-top: 0.25rem;
+    }
+  }
+
+  /* Tags Widget */
+  &_tag_cloud {
+    .tagcloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      a {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem !important;
+        color: var(--color-text);
+        background-color: var(--color-background-alt, #f8f9fa);
+        border-radius: 999px;
+        text-decoration: none;
+        transition: var(--transition-base);
+
+        &:hover {
+          color: #fff;
+          background-color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  /* Calendar Widget */
+  &_calendar {
+    table {
+      width: 100%;
+      text-align: center;
+    }
+
+    caption {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    th,
+    td {
+      padding: 0.25rem;
+    }
+
+    #today {
+      background-color: var(--color-primary);
+      color: #fff;
+      border-radius: 4px;
+    }
+  }
+}

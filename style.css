@@ -1,0 +1,18 @@
+/*
+Theme Name: WP Luther Blue
+Theme URI: https://votre-site.com/themes/wp-luther-blue
+Author: Votre Nom
+Author URI: https://votre-site.com
+Description: Un thème WordPress moderne avec support Gutenberg, SCSS, et optimisé pour les performances
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: 6.7.1
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: wp-luther-blue
+Domain Path: /languages
+*/
+
+/* Importation des styles compilés */
+@import "assets/css/style.css";

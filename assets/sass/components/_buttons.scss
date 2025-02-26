@@ -1,0 +1,215 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+@use 'sass:color';
+
+// Button Configuration
+$button-variants: (
+  'primary': ('background': map.get($colors, 'primary'),
+    'color': map.get($colors, 'white'),
+    'hover-background': color.adjust(map.get($colors, 'primary'), $lightness: -10%),
+    'hover-color': map.get($colors, 'white'),
+  ),
+  'secondary': ('background': map.get($colors, 'secondary'),
+    'color': map.get($colors, 'white'),
+    'hover-background': color.adjust(map.get($colors, 'secondary'), $lightness: -10%),
+    'hover-color': map.get($colors, 'white'),
+  ),
+  'outline': ('background': transparent,
+    'color': map.get($colors, 'primary'),
+    'border-color': map.get($colors, 'primary'),
+    'hover-background': map.get($colors, 'primary'),
+    'hover-color': map.get($colors, 'white'),
+  ),
+);
+
+// Basic mixin for buttons
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacers, 2) map.get($spacers, 3);
+  font-size: map.get($font-sizes, 'base');
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border-radius: map.get($border-radius, 'md');
+  border: 1px solid transparent;
+  cursor: pointer;
+  @include transition('base');
+
+  &:disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+}
+
+// Button Classes
+.btn {
+  display: inline-block;
+  padding: map.get($spacers, 2) map.get($spacers, 3);
+  font-size: map.get($font-sizes, 'base');
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: map.get($border-radius, 'md');
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(map.get($colors, 'primary'), 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+}
+
+// Generating button variants
+@each $variant, $props in $button-variants {
+  .btn-#{$variant} {
+    background: map.get($props, 'background');
+    color: map.get($props, 'color');
+
+    @if map.has-key($props, 'border-color') {
+      border-color: map.get($props, 'border-color');
+    }
+
+    @include mix.hover {
+      background: map.get($props, 'hover-background');
+      color: map.get($props, 'hover-color');
+    }
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: map.get($spacers, 1) map.get($spacers, 2);
+  font-size: map.get($font-sizes, 'sm');
+}
+
+.btn-lg {
+  padding: map.get($spacers, 3) map.get($spacers, 4);
+  font-size: map.get($font-sizes, 'lg');
+}
+
+// Full width button
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* Button Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-base);
+  background-color: var(--color-primary);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--color-primary-dark, #0056b3);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  /* Variants */
+  &--secondary {
+    background-color: var(--color-secondary);
+
+    &:hover {
+      background-color: var(--color-secondary-dark, #545b62);
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: #fff;
+    }
+  }
+
+  &--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  &--large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  /* Loading status */
+  &--loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      border-right-color: transparent;
+      animation: button-loading 0.75s infinite linear;
+    }
+  }
+}
+
+/* Styles for native buttons */
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  @extend .button;
+}
+
+/* Loading animation */
+@keyframes button-loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

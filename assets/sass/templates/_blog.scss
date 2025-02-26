@@ -1,0 +1,96 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use 'sass:color';
+
+.blog {
+  &-grid {
+    display: grid;
+    gap: map.get($spacers, 4);
+    margin-bottom: map.get($spacers, 5);
+
+    @include breakpoint('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include breakpoint('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &-post {
+    background: map.get($colors, 'white');
+    border-radius: map.get($border-radius, 'lg');
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @include transition('base');
+
+    @include hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &-thumbnail {
+      position: relative;
+      padding-top: 56.25%; // 16:9 aspect ratio
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-content {
+      padding: map.get($spacers, 3);
+    }
+
+    &-title {
+      font-size: map.get($font-sizes, 'xl');
+      margin-bottom: map.get($spacers, 2);
+
+      a {
+        color: map.get($colors, 'gray', 900);
+        text-decoration: none;
+        @include transition('base');
+
+        @include hover {
+          color: map.get($colors, 'primary');
+        }
+      }
+    }
+
+    &-meta {
+      font-size: map.get($font-sizes, 'sm');
+      color: map.get($colors, 'gray', 600);
+      margin-bottom: map.get($spacers, 2);
+      display: flex;
+      gap: map.get($spacers, 2);
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        @include hover {
+          color: map.get($colors, 'primary');
+        }
+      }
+    }
+
+    &-excerpt {
+      color: map.get($colors, 'gray', 700);
+      margin-bottom: map.get($spacers, 3);
+    }
+
+    &-footer {
+      padding: map.get($spacers, 3);
+      border-top: 1px solid map.get($colors, 'gray', 200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

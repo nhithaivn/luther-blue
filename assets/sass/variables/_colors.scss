@@ -1,0 +1,48 @@
+/* Color variables */
+:root {
+  /* Main colors */
+  --color-primary: #f6871f;
+  --color-primary-dark: #cf6611;
+  --color-primary-light: #ffa74a;
+
+  --color-secondary: #6c757d;
+  --color-secondary-dark: #545b62;
+  --color-secondary-light: #a1a8ae;
+
+  /* Semantic colors */
+  --color-success: #28a745;
+  --color-success-dark: #1e7e34;
+  --color-success-light: #48c764;
+
+  --color-danger: #dc3545;
+  --color-danger-dark: #bd2130;
+  --color-danger-light: #e4606d;
+
+  --color-warning: #ffc107;
+  --color-warning-dark: #d39e00;
+  --color-warning-light: #ffcd39;
+
+  --color-info: #17a2b8;
+  --color-info-dark: #117a8b;
+  --color-info-light: #3dd5f3;
+
+  /* Text Colors */
+  --color-text: #212529;
+  --color-text-light: #6c757d;
+  --color-text-lighter: #adb5bd;
+
+  /* Background colors */
+  --color-background: #ffffff;
+  --color-background-alt: #f8f9fa;
+  --color-background-dark: #09101d;
+
+  /* Border Colors */
+  --color-border: #dee2e6;
+  --color-border-dark: #ced4da;
+  --color-border-light: #e9ecef;
+
+  /* Overlay Colors */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-overlay-light: rgba(0, 0, 0, 0.25);
+  --color-overlay-dark: rgba(0, 0, 0, 0.75);
+}

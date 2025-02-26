@@ -1,0 +1,48 @@
+/* WordPress Caption Styles */
+.wp-caption {
+  max-width: 100%;
+  margin-bottom: var(--spacing-md);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &.aligncenter {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  &.alignleft {
+    float: left;
+    margin-right: var(--spacing-md);
+  }
+
+  &.alignright {
+    float: right;
+    margin-left: var(--spacing-md);
+  }
+}
+
+.wp-caption-text {
+  margin: var(--spacing-xs) 0 0;
+  padding: var(--spacing-xs);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-text-light);
+  text-align: center;
+  background-color: var(--color-background-alt);
+}
+
+/* Image block captions */
+.blocks-gallery-caption,
+.wp-block-embed figcaption,
+.wp-block-image figcaption {
+  margin-top: var(--spacing-xs);
+  margin-bottom: 0;
+  color: var(--color-text-light);
+  text-align: center;
+  font-size: 0.875rem;
+}

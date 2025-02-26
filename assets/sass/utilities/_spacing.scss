@@ -1,0 +1,202 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+@use 'sass:math';
+
+// Margin Utilities
+@each $breakpoint-name, $breakpoint-value in $breakpoints {
+  @include mix.breakpoint($breakpoint-name) {
+    @each $space-key, $space-value in $spacers {
+
+      // Marges
+      .m-#{$breakpoint-name}-#{$space-key} {
+        margin: $space-value !important;
+      }
+
+      .mt-#{$breakpoint-name}-#{$space-key} {
+        margin-top: $space-value !important;
+      }
+
+      .mb-#{$breakpoint-name}-#{$space-key} {
+        margin-bottom: $space-value !important;
+      }
+
+      .ml-#{$breakpoint-name}-#{$space-key} {
+        margin-left: $space-value !important;
+      }
+
+      .mr-#{$breakpoint-name}-#{$space-key} {
+        margin-right: $space-value !important;
+      }
+
+      .mx-#{$breakpoint-name}-#{$space-key} {
+        margin-left: $space-value !important;
+        margin-right: $space-value !important;
+      }
+
+      .my-#{$breakpoint-name}-#{$space-key} {
+        margin-top: $space-value !important;
+        margin-bottom: $space-value !important;
+      }
+
+      // Paddings
+      .p-#{$breakpoint-name}-#{$space-key} {
+        padding: $space-value !important;
+      }
+
+      .pt-#{$breakpoint-name}-#{$space-key} {
+        padding-top: $space-value !important;
+      }
+
+      .pb-#{$breakpoint-name}-#{$space-key} {
+        padding-bottom: $space-value !important;
+      }
+
+      .pl-#{$breakpoint-name}-#{$space-key} {
+        padding-left: $space-value !important;
+      }
+
+      .pr-#{$breakpoint-name}-#{$space-key} {
+        padding-right: $space-value !important;
+      }
+
+      .px-#{$breakpoint-name}-#{$space-key} {
+        padding-left: $space-value !important;
+        padding-right: $space-value !important;
+      }
+
+      .py-#{$breakpoint-name}-#{$space-key} {
+        padding-top: $space-value !important;
+        padding-bottom: $space-value !important;
+      }
+    }
+
+    // Special values
+    .m-#{$breakpoint-name}-auto {
+      margin: auto !important;
+    }
+
+    .mt-#{$breakpoint-name}-auto {
+      margin-top: auto !important;
+    }
+
+    .mb-#{$breakpoint-name}-auto {
+      margin-bottom: auto !important;
+    }
+
+    .ml-#{$breakpoint-name}-auto {
+      margin-left: auto !important;
+    }
+
+    .mr-#{$breakpoint-name}-auto {
+      margin-right: auto !important;
+    }
+
+    .mx-#{$breakpoint-name}-auto {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    .my-#{$breakpoint-name}-auto {
+      margin-top: auto !important;
+      margin-bottom: auto !important;
+    }
+  }
+}
+
+// Gap utilities for grids and flexbox
+@each $space-key, $space-value in $spacers {
+  .gap-#{$space-key} {
+    gap: $space-value !important;
+  }
+
+  .gap-x-#{$space-key} {
+    column-gap: $space-value !important;
+  }
+
+  .gap-y-#{$space-key} {
+    row-gap: $space-value !important;
+  }
+}
+
+// Position utilities
+.position-relative {
+  position: relative !important;
+}
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-fixed {
+  position: fixed !important;
+}
+
+.position-sticky {
+  position: sticky !important;
+}
+
+.position-static {
+  position: static !important;
+}
+
+// Positioning Utilities
+@each $position in (0, 50, 100) {
+  .top-#{$position} {
+    top: math.percentage(math.div($position, 100)) !important;
+  }
+
+  .bottom-#{$position} {
+    bottom: math.percentage(math.div($position, 100)) !important;
+  }
+
+  .start-#{$position} {
+    left: math.percentage(math.div($position, 100)) !important;
+  }
+
+  .end-#{$position} {
+    right: math.percentage(math.div($position, 100)) !important;
+  }
+}
+
+// Z-index utilities
+@each $z-key, $z-value in $z-indices {
+  .z-#{$z-key} {
+    z-index: $z-value !important;
+  }
+}
+
+// Negative Space Utilities
+@each $space-key, $space-value in $spacers {
+  @if $space-value !=0 {
+    .-m-#{$space-key} {
+      margin: -$space-value !important;
+    }
+
+    .-mt-#{$space-key} {
+      margin-top: -$space-value !important;
+    }
+
+    .-mb-#{$space-key} {
+      margin-bottom: -$space-value !important;
+    }
+
+    .-ml-#{$space-key} {
+      margin-left: -$space-value !important;
+    }
+
+    .-mr-#{$space-key} {
+      margin-right: -$space-value !important;
+    }
+
+    .-mx-#{$space-key} {
+      margin-left: -$space-value !important;
+      margin-right: -$space-value !important;
+    }
+
+    .-my-#{$space-key} {
+      margin-top: -$space-value !important;
+      margin-bottom: -$space-value !important;
+    }
+  }
+}

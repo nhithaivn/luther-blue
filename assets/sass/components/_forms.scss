@@ -1,0 +1,112 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as fn;
+@use 'sass:map';
+@use 'sass:color';
+
+/* Form Styles */
+.form {
+  &__group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: #fff;
+    border: 1px solid var(--color-border, #dee2e6);
+    border-radius: 4px;
+    transition: var(--transition-base);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    &::placeholder {
+      color: var(--color-text-light, #6c757d);
+    }
+
+    &:disabled {
+      background-color: var(--color-background-alt, #f8f9fa);
+      cursor: not-allowed;
+    }
+
+    &[readonly] {
+      background-color: var(--color-background-alt, #f8f9fa);
+    }
+  }
+
+  &__textarea {
+    @extend .form__input;
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  &__select {
+    @extend .form__input;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23212529' viewBox='0 0 16 16'%3E%3Cpath d='M8 10.5l-4-4h8l-4 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px;
+    appearance: none;
+  }
+
+  &__help {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-light, #6c757d);
+  }
+
+  &__error {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-danger);
+  }
+
+  /* Validation styles */
+  &__input.is-valid,
+  &__textarea.is-valid,
+  &__select.is-valid {
+    border-color: var(--color-success);
+  }
+
+  &__input.is-invalid,
+  &__textarea.is-invalid,
+  &__select.is-invalid {
+    border-color: var(--color-danger);
+  }
+}
+
+/* Custom checkbox and radio */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+
+  &__input {
+    width: 1rem;
+    height: 1rem;
+    margin-right: var(--spacing-xs);
+  }
+
+  &__label {
+    font-size: 1rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+}

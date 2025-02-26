@@ -1,0 +1,44 @@
+@use "../../variables" as *;
+
+@mixin styles {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  @media (max-width: $breakpoint-md) {
+    position: static;
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.02);
+    padding-left: $spacing-md;
+  }
+
+  &.toggled {
+    display: block;
+  }
+
+  li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  a {
+    padding: $spacing-sm $spacing-md;
+    display: block;
+    color: $color-dark;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
