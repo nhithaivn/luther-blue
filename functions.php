@@ -164,3 +164,30 @@ function enqueue_slick_and_imagesloaded()
   wp_enqueue_script('imagesloaded', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_slick_and_imagesloaded');
+
+//Update cart
+function custom_enqueue_scripts()
+{
+  wp_enqueue_script('jquery');
+  wp_enqueue_script('popup-cart', get_template_directory_uri() . '/assets/js/popup-cart.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
+
+// function custom_add_to_cart_redirect()
+// {
+//   return wc_get_cart_url();
+// }
+// add_filter('woocommerce_add_to_cart_redirect', 'custom_add_to_cart_redirect');
+
+
+//Cart popup
+add_filter('woocommerce_add_to_cart_fragments', 'update_cart_count');
+function update_cart_count($fragments)
+{
+  ob_start();
+?>
+  <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+<?php
+  $fragments['.cart-count'] = ob_get_clean();
+  return $fragments;
+}

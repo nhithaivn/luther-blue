@@ -104,63 +104,61 @@ get_header(); ?>
             <p><strong>Select Size</strong></p>
             <?php
             $available_variations = $product->get_available_variations();
-            $variation_data = [];
-
-            $default_variation = reset($available_variations); // Get the first variation
+            $default_variation = reset($available_variations);
             $default_variation_id = $default_variation['variation_id'] ?? null;
-            $default_price = $default_variation['display_price'] ?? $product->get_price(); // Use default price if no variation
 
             foreach ($available_variations as $variation) {
               $variation_id = $variation['variation_id'];
-              $attributes = $variation['attributes'];
-
-              $size = $attributes['attribute_sizes'] ?? '';
-              $price = $variation['display_price']; // Variation price
+              $size = $variation['attributes']['attribute_sizes'] ?? '';
+              $price = $variation['display_price'];
 
               if (!empty($size)) {
                 echo '<label class="size-option">
-                    <input type="radio" name="selected_size" value="' . esc_attr($variation_id) . '" data-price="' . esc_attr($price) . '" ' . checked($variation_id, $default_variation_id, false) . '> 
-                    <span>' . esc_html($size) . '</span>
-                </label>';
-                $variation_data[$variation_id] = $price;
+                <input type="radio" name="variation_id" value="' . esc_attr($variation_id) . '" data-price="' . esc_attr($price) . '" required> 
+                <span>' . esc_html($size) . '</span>
+              </label>';
               }
             }
             ?>
           </div>
-          <!-- Hidden input for product ID -->
-          <input type="hidden" name="product_id" value="<?php echo esc_attr($product->get_id()); ?>">
 
-          <!-- Add to Cart Button -->
-          <button type="submit" class="submit-button">Add To Your Cart - <span id="dynamic-price" class="product-prize"><?php echo wc_price($product->get_price()); ?></span></button>
+          <!-- ✅ Required WooCommerce Hidden Fields -->
+          <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>">
+          <input type="hidden" name="quantity" value="1">
+
+          <button type="submit" class="submit-button">Add To Your Cart -
+            <span id="dynamic-price" class="product-prize"><?php echo wc_price($product->get_price()); ?></span>
+          </button>
         </form>
+
         <script>
           document.addEventListener("DOMContentLoaded", function() {
             const sizeRadios = document.querySelectorAll(".size-option input");
             const priceElement = document.getElementById("dynamic-price");
 
-            // Select first available size by default
-            const defaultSelected = document.querySelector('.size-option input:checked');
-            if (defaultSelected) {
-              const price = defaultSelected.getAttribute("data-price");
-              priceElement.innerHTML = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: '<?php echo get_woocommerce_currency(); ?>'
-              }).format(price);
+            if (sizeRadios.length > 0) {
+              // Select first available size by default
+              sizeRadios[0].checked = true;
+              updatePrice(sizeRadios[0]);
             }
 
-            // Update price when user selects a size
+            // Update price and variation ID when a size is selected
             sizeRadios.forEach(radio => {
               radio.addEventListener("change", function() {
-                const price = this.getAttribute("data-price");
-
-                if (price) {
-                  priceElement.innerHTML = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: '<?php echo get_woocommerce_currency(); ?>'
-                  }).format(price);
-                }
+                updatePrice(this);
               });
             });
+
+            function updatePrice(selectedRadio) {
+              const price = selectedRadio.getAttribute("data-price");
+
+              if (price) {
+                priceElement.innerHTML = new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: '<?php echo get_woocommerce_currency(); ?>'
+                }).format(price);
+              }
+            }
           });
         </script>
 

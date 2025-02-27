@@ -58,29 +58,48 @@
             <?php esc_html_e('Menu', 'wp-luther-blue'); ?>
           </span>
         </button>
+        <div class="header-right">
+          <nav class="site-nav" id="site-navigation"
+            aria-label="<?php esc_attr_e('Menu principal', 'wp-luther-blue'); ?>">
+            <?php if (has_nav_menu('primary')) : ?>
+              <?php
+              wp_nav_menu(array(
+                'theme_location' => 'primary',
+                'menu_id'        => 'right-menu',
+                'container'      => false,
+                'menu_class'     => 'site-nav__menu',
+                'fallback_cb'    => false,
+                'items_wrap'     => '<ul id="%1$s" class="%2$s" role="menubar">%3$s</ul>',
+              ));
+              ?>
+            <?php else : ?>
+              <ul class="site-nav__menu">
+                <?php wp_list_pages(array(
+                  'title_li' => false,
+                  'depth'    => 1,
+                )); ?>
+              </ul>
+            <?php endif; ?>
+          </nav>
+          <div class="header-cart">
+            <a href="#" class="cart-icon">
+              Cart <span class="cart-count">(<?php echo WC()->cart->get_cart_contents_count(); ?>)</span>
+            </a>
+          </div>
+        </div>
+      </div>
 
-        <nav class="site-nav" id="site-navigation"
-          aria-label="<?php esc_attr_e('Menu principal', 'wp-luther-blue'); ?>">
-          <?php if (has_nav_menu('primary')) : ?>
-            <?php
-            wp_nav_menu(array(
-              'theme_location' => 'primary',
-              'menu_id'        => 'right-menu',
-              'container'      => false,
-              'menu_class'     => 'site-nav__menu',
-              'fallback_cb'    => false,
-              'items_wrap'     => '<ul id="%1$s" class="%2$s" role="menubar">%3$s</ul>',
-            ));
-            ?>
-          <?php else : ?>
-            <ul class="site-nav__menu">
-              <?php wp_list_pages(array(
-                'title_li' => false,
-                'depth'    => 1,
-              )); ?>
-            </ul>
-          <?php endif; ?>
-        </nav>
+      <!-- /CART POPUP CONTENT/ -->
+      <div id="popup-cart" class="popup-cart">
+        <div class="popup-cart-content">
+          <span class="close-popup">&times;</span>
+          <h3>Your Cart (<?php echo WC()->cart->get_cart_contents_count(); ?>)</h3>
+          <div class="cart-content">
+            <?php woocommerce_mini_cart(); ?>
+          </div>
+          <a href="<?php echo wc_get_checkout_url(); ?>" class="button checkout">Go to Checkout</a>
+          <p>Free standard shipping Worldwide with orders over $80.</p>
+        </div>
       </div>
     </header>
 

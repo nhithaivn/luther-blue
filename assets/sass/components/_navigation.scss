@@ -145,9 +145,9 @@
 }
 
 .site-nav {
-  @include mix.breakpoint('md') {
-    order: 2;
-  }
+  // @include mix.breakpoint('md') {
+  //   order: 2;
+  // }
 
   @media (max-width: 767px) {
     position: fixed;
@@ -307,5 +307,18 @@
     &.is-active {
       display: block;
     }
+  }
+}
+
+//CUSTOM
+.header-right {
+  display: flex;
+
+  .cart-icon {
+    font-family: map.get($font-families, 'base');
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #333333;
   }
 }
