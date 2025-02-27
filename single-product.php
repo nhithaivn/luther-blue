@@ -7,13 +7,12 @@
 get_header(); ?>
 
 <?php while (have_posts()) : the_post();
-  global $product; ?>
+  global $product;
+?>
 
   <div class="product-container">
-
     <!-- Left Section: Product Images (Slick Slider) -->
-    <div class="product-slider-container">
-      <!-- Main Image Slider -->
+    <div class="product-slider-wrap">
       <div class="product-slider">
         <?php
         global $product;
@@ -45,7 +44,6 @@ get_header(); ?>
         ?>
       </div>
 
-      <!-- Thumbnail Slider -->
       <div class="product-thumbs">
         <?php
         // Add main product thumbnail
@@ -66,124 +64,255 @@ get_header(); ?>
         }
         ?>
       </div>
-
     </div>
 
     <!-- Right Section: Product Information -->
-    <div class="product-info">
+    <div class="product-info-wrap">
       <h1 class="product-title"><?php the_title(); ?></h1>
-      <!-- Short description -->
-      <p class="excerpt"><?php echo get_the_excerpt(); ?></p>
-      <!-- Features -->
+      <p class="product-description"><?php echo $product->get_description();  ?></p>
       <p><strong>Features</strong></p>
       <?php
       $features = get_field('features', $product->get_id());
       if ($features) {
-        echo '<p>' . wp_kses_post($features) . '</p>'; // Safely output textarea with formatting
+        echo '<p class="product-text">' . wp_kses_post($features) . '</p>'; // Safely output textarea with formatting
       } else {
-        echo '<p>No features available.</p>';
+        echo '<p class="product-text">No features available.</p>';
       }
       ?>
-      <!-- Aroma -->
       <p><strong>Aroma</strong></p>
       <?php
       $aroma = get_field('aroma', $product->get_id());
       if ($aroma) {
-        echo '<p>' . wp_kses_post($aroma) . '</p>'; // Safely output textarea with formatting
+        echo '<p class="product-text">' . wp_kses_post($aroma) . '</p>'; // Safely output textarea with formatting
       } else {
-        echo '<p>No aroma available.</p>';
+        echo '<p class="product-text">No aroma available.</p>';
       }
       ?>
-      <!-- Ingredients -->
-      <p><strong>Ingredients</strong></p>
+      <p><strong>Key Ingredients</strong></p>
       <?php
       $ingredients = get_field('ingredients', $product->get_id());
       if ($ingredients) {
-        echo '<p>' . wp_kses_post($ingredients) . '</p>'; // Safely output textarea with formatting
+        echo '<p class="product-text">' . wp_kses_post($ingredients) . '</p>'; // Safely output textarea with formatting
       } else {
-        echo '<p>No ingredients available.</p>';
+        echo '<p class="product-text">No ingredients available.</p>';
       }
       ?>
 
-      <!-- Size Selection -->
-      <?php
-      $sizes = get_field('sizes'); // Get sizes from ACF (Checkbox or Repeater Field)
-      if ($sizes) : ?>
+      <?php if ($product->is_type('variable')) : ?>
         <form class="cart" method="post" enctype="multipart/form-data">
           <div class="product-sizes">
-            <p><strong>Select Size:</strong></p>
-            <?php foreach ($sizes as $size) : ?>
-              <label class="size-option">
-                <input type="radio" name="selected_size" value="<?php echo esc_attr($size); ?>" required>
-                <span><?php echo esc_html($size); ?></span>
-              </label>
-            <?php endforeach; ?>
-          </div>
+            <p><strong>Select Size</strong></p>
+            <?php
+            $available_variations = $product->get_available_variations();
+            $variation_data = [];
 
+            $default_variation = reset($available_variations); // Get the first variation
+            $default_variation_id = $default_variation['variation_id'] ?? null;
+            $default_price = $default_variation['display_price'] ?? $product->get_price(); // Use default price if no variation
+
+            foreach ($available_variations as $variation) {
+              $variation_id = $variation['variation_id'];
+              $attributes = $variation['attributes'];
+
+              $size = $attributes['attribute_sizes'] ?? '';
+              $price = $variation['display_price']; // Variation price
+
+              if (!empty($size)) {
+                echo '<label class="size-option">
+                    <input type="radio" name="selected_size" value="' . esc_attr($variation_id) . '" data-price="' . esc_attr($price) . '" ' . checked($variation_id, $default_variation_id, false) . '> 
+                    <span>' . esc_html($size) . '</span>
+                </label>';
+                $variation_data[$variation_id] = $price;
+              }
+            }
+            ?>
+          </div>
           <!-- Hidden input for product ID -->
-          <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>">
+          <input type="hidden" name="product_id" value="<?php echo esc_attr($product->get_id()); ?>">
 
           <!-- Add to Cart Button -->
-          <button type="submit" class="button alt">Add to Cart</button>
+          <button type="submit" class="submit-button">Add To Your Cart - <span id="dynamic-price" class="product-prize"><?php echo wc_price($product->get_price()); ?></span></button>
         </form>
-      <?php else: ?>
-        <p><strong>Sizes:</strong> Not Available</p>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            const sizeRadios = document.querySelectorAll(".size-option input");
+            const priceElement = document.getElementById("dynamic-price");
+
+            // Select first available size by default
+            const defaultSelected = document.querySelector('.size-option input:checked');
+            if (defaultSelected) {
+              const price = defaultSelected.getAttribute("data-price");
+              priceElement.innerHTML = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: '<?php echo get_woocommerce_currency(); ?>'
+              }).format(price);
+            }
+
+            // Update price when user selects a size
+            sizeRadios.forEach(radio => {
+              radio.addEventListener("change", function() {
+                const price = this.getAttribute("data-price");
+
+                if (price) {
+                  priceElement.innerHTML = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: '<?php echo get_woocommerce_currency(); ?>'
+                  }).format(price);
+                }
+              });
+            });
+          });
+        </script>
+
       <?php endif; ?>
-      <!-- Price -->
-      <p class="price"><?php echo $product->get_price_html(); ?></p>
+
+      <p><strong>Pay With Afterpay</strong></p>
+      <?php
+      $note = get_field('note', $product->get_id());
+      if ($note) {
+        echo '<p class="product-text last">' . wp_kses_post($note) . '</p>'; // Safely output textarea with formatting
+      }
+      ?>
     </div>
-    <!-- Full Product Description -->
-    <?php
-    $full_description = $product->get_description();
-    if ($full_description) : ?>
-      <div class="product-description">
-        <h3>Product Description</h3>
-        <p><?php echo wp_kses_post($full_description); ?></p>
+  </div>
+
+  <!-- Benefits && how to use -->
+  <div class="more-info">
+    <div class="odd-card">
+      <div class="card-text">
+        <p><strong>The benefits</strong></p>
+        <?php
+        $benefits = get_field('benefits', $product->get_id());
+        if ($benefits) {
+          echo '<p class="product-text">' . wp_kses_post($benefits) . '</p>'; // Safely output textarea with formatting
+        }
+        ?>
       </div>
-    <?php endif; ?>
+      <?php
+      $benefits_image = get_field('benefits_image');
+
+      if ($benefits_image) {
+        echo '<img src="' . esc_url($benefits_image) . '" alt="how to use">';
+      }
+      ?>
+    </div>
+    <div class="even-card">
+      <div class="card-text">
+        <p><strong>How To Use It</strong></p>
+        <?php
+        $howtouse = get_field('how_to_use', $product->get_id());
+        if ($howtouse) {
+          echo '<p class="product-text">' . wp_kses_post($howtouse) . '</p>'; // Safely output textarea with formatting
+        }
+        ?>
+      </div>
+      <?php
+      $howtouseimge = get_field('how_to_use_image');
+
+      if ($howtouseimge) {
+        echo '<img src="' . esc_url($howtouseimge) . '" alt="how to use">';
+      }
+      ?>
+    </div>
+
   </div>
 
 <?php endwhile; ?>
 
 <!-- You may also like -->
-<h3>You may also like </h3>
-<?php
-$args = array(
-  'limit'   => 10, // Number of products to display
-  'orderby' => 'date', // Sort by newest
-  'order'   => 'DESC',
-  'status'  => 'publish'
-);
+<div class="relate-products">
+  <div class="container">
+    <h3 class="block-title">You may also like</h3>
 
-$products = wc_get_products($args);
+    <div class="relate-product-slider">
+      <?php
+      $args = array(
+        'limit'   => 10,
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'status'  => 'publish',
+      );
 
-if (!empty($products)) :
-  echo '<ul class="new-products-list">';
-  foreach ($products as $product) {
-    $product_id = $product->get_id();
-    $image_url = wp_get_attachment_image_url($product->get_image_id(), 'medium'); // Get product image
+      $products = wc_get_products($args);
 
-?>
-    <li class="product-item">
-      <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
-        <div class="product-image">
-          <?php if ($image_url) : ?>
-            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>">
-          <?php else : ?>
-            <img src="<?php echo esc_url(wc_placeholder_img_src()); ?>" alt="Placeholder Image">
-          <?php endif; ?>
-        </div>
-        <h2 class="product-title"><?php echo esc_html($product->get_name()); ?></h2>
-        <p class="price"><?php echo $product->get_price_html(); ?></p>
-      </a>
-    </li>
-<?php
-  }
-  echo '</ul>';
-else :
-  echo '<p>No new products found.</p>';
-endif;
-?>
+      if (!empty($products)) :
+        foreach ($products as $product) {
+          $product_id = $product->get_id();
+          $image_url = wp_get_attachment_image_url($product->get_image_id(), 'medium') ?: wc_placeholder_img_src();
+          $categories = wc_get_product_category_list($product_id, ', '); // Get categories
+
+          // Default price variables
+          $regular_price = null;
+          $sale_price = null;
+
+          // Check if product is variable
+          if ($product->is_type('variable')) {
+            $variations = $product->get_available_variations();
+            $smallest_price = null;
+
+            foreach ($variations as $variation) {
+              $variation_id = $variation['variation_id'];
+              $variation_obj = wc_get_product($variation_id);
+
+              $variation_regular_price = $variation_obj->get_regular_price();
+              $variation_sale_price = $variation_obj->get_sale_price();
+
+              // Find the lowest priced variation
+              if ($smallest_price === null || $variation_regular_price < $smallest_price) {
+                $smallest_price = $variation_regular_price;
+                $regular_price = $variation_regular_price;
+                $sale_price = $variation_sale_price;
+              }
+            }
+          } else {
+            // For simple products
+            $regular_price = $product->get_regular_price();
+            $sale_price = $product->get_sale_price();
+          }
+
+          // Format price output
+          if ($sale_price && $sale_price < $regular_price) {
+            $price_html = wc_price($sale_price);
+          } else {
+            $price_html = wc_price($regular_price);
+          }
+      ?>
+          <div class="product-item">
+            <div class="product-image">
+              <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
+
+                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
+              </a>
+            </div>
+            <p class="category"><?php echo wp_kses_post($categories); ?></p>
+            <div class="product-title-price">
+              <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
+                <h2 class="product-title"><?php echo esc_html($product->get_name()); ?></h2>
+              </a>
+              <div class="product-price">
+                <p class="regular-price"><?php echo wc_price($regular_price); ?></p>
+                <?php if ($sale_price) : ?>
+                  <p class="current-price"><?php echo wc_price($sale_price); ?></p>
+                <?php endif; ?>
+              </div>
+            </div>
+            <p class="product-description"><?php echo $product->get_description();  ?></p>
+            <button type="submit" class="submit-button">Add To Your Cart - <span id="dynamic-price" class="product-prize"> <?php echo wp_kses_post($price_html); ?></span></button>
+          </div>
+      <?php
+        }
+      else :
+        echo '<p>No new products found.</p>';
+      endif;
+      ?>
+    </div>
+  </div>
+</div>
+
+<!-- Slick Slider JS -->
+<script>
+
+</script>
 
 <!-- // -->
 <?php get_footer(); ?>

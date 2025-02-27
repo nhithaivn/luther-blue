@@ -7,7 +7,7 @@
 /**
  * Ajoute des classes personnalisées au tableau des classes body
  */
-function wp_starter_basic_body_classes($classes)
+function wp_luther_blue_body_classes($classes)
 {
   // Ajoute une classe si JS est activé
   if (!is_admin()) {
@@ -32,24 +32,24 @@ function wp_starter_basic_body_classes($classes)
 
   return $classes;
 }
-add_filter('body_class', 'wp_starter_basic_body_classes');
+add_filter('body_class', 'wp_luther_blue_body_classes');
 
 /**
  * Ajoute un script pour remplacer no-js par js dans la classe body
  */
-function wp_starter_basic_javascript_detection()
+function wp_luther_blue_javascript_detection()
 {
   echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
 }
-add_action('wp_head', 'wp_starter_basic_javascript_detection', 0);
+add_action('wp_head', 'wp_luther_blue_javascript_detection', 0);
 
 /**
  * Ajoute des attributs rel appropriés aux liens
  */
-function wp_starter_basic_pingback_header()
+function wp_luther_blue_pingback_header()
 {
   if (is_singular() && pings_open()) {
     printf('<link rel="pingback" href="%s">', esc_url(get_bloginfo('pingback_url')));
   }
 }
-add_action('wp_head', 'wp_starter_basic_pingback_header');
+add_action('wp_head', 'wp_luther_blue_pingback_header');

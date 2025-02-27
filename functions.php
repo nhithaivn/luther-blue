@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Theme Configuration
-if (!function_exists('wp_starter_basic_setup')):
-  function wp_starter_basic_setup()
+if (!function_exists('wp_luther_blue_setup')):
+  function wp_luther_blue_setup()
   {
     // Translation support
     load_theme_textdomain('wp-luther-blue', get_template_directory() . '/languages');
@@ -36,7 +36,7 @@ if (!function_exists('wp_starter_basic_setup')):
     ));
   }
 endif;
-add_action('after_setup_theme', 'wp_starter_basic_setup');
+add_action('after_setup_theme', 'wp_luther_blue_setup');
 
 // Support RTL
 add_action('after_setup_theme', function () {
@@ -44,7 +44,7 @@ add_action('after_setup_theme', function () {
 });
 
 // Saving Scripts and Styles
-function wp_starter_basic_scripts()
+function wp_luther_blue_scripts()
 {
   // Load compiled main style
   wp_enqueue_style(
@@ -67,10 +67,10 @@ function wp_starter_basic_scripts()
     wp_enqueue_script('comment-reply');
   }
 }
-add_action('wp_enqueue_scripts', 'wp_starter_basic_scripts');
+add_action('wp_enqueue_scripts', 'wp_luther_blue_scripts');
 
-// Added after wp_starter_basic_scripts()
-function wp_starter_basic_widgets_init()
+// Added after wp_luther_blue_scripts()
+function wp_luther_blue_widgets_init()
 {
   register_sidebar(array(
     'name'          => esc_html__('Sidebar Principal', 'wp-luther-blue'),
@@ -82,7 +82,7 @@ function wp_starter_basic_widgets_init()
     'after_title'   => '</h2>',
   ));
 }
-add_action('widgets_init', 'wp_starter_basic_widgets_init');
+add_action('widgets_init', 'wp_luther_blue_widgets_init');
 
 // Include additional files
 require get_template_directory() . '/inc/template-functions.php';
@@ -92,7 +92,7 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Check theme dependencies
  */
-function wp_starter_basic_check_dependencies()
+function wp_luther_blue_check_dependencies()
 {
   $notices = array();
 
@@ -123,7 +123,7 @@ function wp_starter_basic_check_dependencies()
     }
   }
 }
-add_action('admin_init', 'wp_starter_basic_check_dependencies');
+add_action('admin_init', 'wp_luther_blue_check_dependencies');
 
 
 function register_two_menus()

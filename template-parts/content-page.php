@@ -3,7 +3,7 @@
 /**
  * Template part for displaying page content
  *
- * @package WP_Starter_Basic
+ * @package WP_Luther_Blue
  */
 ?>
 

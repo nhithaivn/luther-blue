@@ -3,9 +3,9 @@ jQuery(document).ready(function ($) {
     $('.product-slider').slick({
       slidesToShow: 1,
       slidesToScroll: 1,
-      arrows: true,
+      arrows: false,
       fade: true,
-      adaptiveHeight: true,
+      adaptiveHeight: false,
       asNavFor: '.product-thumbs' // Link to thumbnail slider
     });
 
@@ -16,8 +16,39 @@ jQuery(document).ready(function ($) {
       dots: false,
       centerMode: false,
       focusOnSelect: true,
-      arrows: true
+      arrows: false,
+      vertical: true, // Make it vertical
+      verticalSwiping: true // Enable vertical swiping
     });
   });
 });
 
+jQuery(document).ready(function ($) {
+  $(".relate-product-slider").slick({
+    slidesToShow: 3, // Number of slides visible at a time
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 3000,
+    dots: true,
+    arrows: false,
+    responsive: [{
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1
+      }
+    }
+    ]
+  });
+});

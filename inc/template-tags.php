@@ -4,11 +4,11 @@
  * Fonctions de template personnalisées pour ce thème
  */
 
-if (!function_exists('wp_starter_basic_posted_on')) :
+if (!function_exists('wp_luther_blue_posted_on')) :
   /**
    * Affiche la date de publication d'un article
    */
-  function wp_starter_basic_posted_on()
+  function wp_luther_blue_posted_on()
   {
     $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
     if (get_the_time('U') !== get_the_modified_time('U')) {
@@ -31,11 +31,11 @@ if (!function_exists('wp_starter_basic_posted_on')) :
   }
 endif;
 
-if (!function_exists('wp_starter_basic_posted_by')) :
+if (!function_exists('wp_luther_blue_posted_by')) :
   /**
    * Affiche le nom de l'auteur de l'article
    */
-  function wp_starter_basic_posted_by()
+  function wp_luther_blue_posted_by()
   {
     echo '<span class="byline">' . sprintf(
       /* translators: %s: post author */
@@ -45,11 +45,11 @@ if (!function_exists('wp_starter_basic_posted_by')) :
   }
 endif;
 
-if (!function_exists('wp_starter_basic_entry_footer')) :
+if (!function_exists('wp_luther_blue_entry_footer')) :
   /**
    * Affiche les catégories, tags et liens de commentaires
    */
-  function wp_starter_basic_entry_footer()
+  function wp_luther_blue_entry_footer()
   {
     // Masquer les tags pour les pages
     if ('post' === get_post_type()) {
@@ -84,11 +84,11 @@ if (!function_exists('wp_starter_basic_entry_footer')) :
   }
 endif;
 
-if (!function_exists('wp_starter_basic_post_thumbnail')) :
+if (!function_exists('wp_luther_blue_post_thumbnail')) :
   /**
    * Affiche l'image à la une
    */
-  function wp_starter_basic_post_thumbnail()
+  function wp_luther_blue_post_thumbnail()
   {
     if (post_password_required() || is_attachment() || !has_post_thumbnail()) {
       return;

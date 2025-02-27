@@ -2,7 +2,7 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
-/* Layout de base */
+/* Base layout */
 .site {
   display: flex;
   flex-direction: column;
@@ -12,11 +12,6 @@
 
 .site-content {
   flex: 1 0 auto;
-  padding: var(--spacing-xl) 0;
-
-  @media (max-width: 768px) {
-    padding: var(--spacing-lg);
-  }
 }
 
 .site-main {

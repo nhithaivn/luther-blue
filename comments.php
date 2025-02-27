@@ -8,16 +8,16 @@ if (post_password_required()) {
   <?php if (have_comments()) : ?>
     <h2 class="comments-title">
       <?php
-      $wp_starter_basic_comment_count = get_comments_number();
-      if ('1' === $wp_starter_basic_comment_count) {
+      $wp_luther_blue_comment_count = get_comments_number();
+      if ('1' === $wp_luther_blue_comment_count) {
         printf(
           esc_html__('Un commentaire sur &ldquo;%1$s&rdquo;', 'wp-luther-blue'),
           '<span>' . wp_kses_post(get_the_title()) . '</span>'
         );
       } else {
         printf(
-          esc_html(_n('%1$s commentaire sur &ldquo;%2$s&rdquo;', '%1$s commentaires sur &ldquo;%2$s&rdquo;', $wp_starter_basic_comment_count, 'wp-luther-blue')),
-          number_format_i18n($wp_starter_basic_comment_count),
+          esc_html(_n('%1$s commentaire sur &ldquo;%2$s&rdquo;', '%1$s commentaires sur &ldquo;%2$s&rdquo;', $wp_luther_blue_comment_count, 'wp-luther-blue')),
+          number_format_i18n($wp_luther_blue_comment_count),
           '<span>' . wp_kses_post(get_the_title()) . '</span>'
         );
       }

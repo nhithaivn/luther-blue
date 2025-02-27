@@ -5,7 +5,7 @@
 
 body {
   font-family: map.get($font-families, 'base');
-  font-size: map.get($font-sizes, 'base');
+  font-size: map.get($font-sizes, 'sm');
   line-height: map.get($line-heights, 'normal');
   color: map.get($colors, 'gray', 800);
   -webkit-font-smoothing: antialiased;
@@ -64,11 +64,6 @@ a {
   @include hover {
     color: var(--color-primary-dark, #cf6611);
     text-decoration: underline;
-  }
-
-  @include focus-visible {
-    text-decoration: underline;
-    outline-offset: 2px;
   }
 }
 

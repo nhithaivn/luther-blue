@@ -16,12 +16,12 @@
 
       <div class="footer-bottom">
         <?php
-        $copyright = get_theme_mod('wp_starter_basic_footer_copyright');
+        $copyright = get_theme_mod('wp_luther_blue_footer_copyright');
         if ($copyright) {
           echo wp_kses_post($copyright);
         } else {
           printf(
-            esc_html__('© %1$s - Sclimb adventure sports.', 'wp-luther-blue'),
+            esc_html__('© %1$s - Luther Blue.', 'wp-luther-blue'),
             date('Y'),
             get_bloginfo('name')
           );

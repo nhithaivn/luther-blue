@@ -3,7 +3,7 @@
 /**
  * Template for displaying pages
  *
- * @package WP_Starter_Basic
+ * @package wp_luther_blue
  */
 
 get_header();

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * The theme header
+ * Theme header
  *
- * @package WP_Starter_Basic
+ * @package wp_luther_blue
  * @since 1.0.0
  */
 ?>
@@ -28,17 +28,17 @@
 
     <header class="site-header" id="masthead">
       <div class="site-header__container container">
+        <nav class="left-menu">
+          <?php
+          wp_nav_menu(array(
+            'theme_location' => 'right-menu',
+            'menu_class'     => 'site-nav__menu',
+            'container'      => 'ul'
+          ));
+          ?>
+        </nav>
         <div class="site-header__branding">
-          <nav class="primary-menu">
-            <?php
-            wp_nav_menu(array(
-              'theme_location' => 'right-menu',
-              'menu_class'     => 'nav-primary',
-              'container'      => 'ul'
-            ));
-            ?>
-          </nav>
-          <?php if ($logo = get_theme_mod('wp_starter_basic_logo')) : ?>
+          <?php if ($logo = get_theme_mod('wp_luther_blue_logo')) : ?>
             <div class="site-header__logo">
               <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
                 <img src="<?php echo esc_url($logo); ?>" alt="<?php bloginfo('name'); ?>" width="150" height="50"
@@ -46,16 +46,6 @@
               </a>
             </div>
           <?php endif; ?>
-
-          <nav class="secondary-menu">
-            <?php
-            wp_nav_menu(array(
-              'theme_location' => 'left-menu',
-              'menu_class'     => 'nav-secondary',
-              'container'      => 'ul'
-            ));
-            ?>
-          </nav>
         </div>
 
         <button class="site-nav__toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -69,13 +59,13 @@
           </span>
         </button>
 
-        <!-- <nav class="site-nav" id="site-navigation"
+        <nav class="site-nav" id="site-navigation"
           aria-label="<?php esc_attr_e('Menu principal', 'wp-luther-blue'); ?>">
           <?php if (has_nav_menu('primary')) : ?>
             <?php
             wp_nav_menu(array(
               'theme_location' => 'primary',
-              'menu_id'        => 'primary-menu',
+              'menu_id'        => 'right-menu',
               'container'      => false,
               'menu_class'     => 'site-nav__menu',
               'fallback_cb'    => false,
@@ -90,7 +80,7 @@
               )); ?>
             </ul>
           <?php endif; ?>
-        </nav> -->
+        </nav>
       </div>
     </header>
 

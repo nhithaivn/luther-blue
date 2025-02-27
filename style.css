@@ -1,9 +1,9 @@
 /*
 Theme Name: WP Luther Blue
-Theme URI: https://votre-site.com/themes/wp-luther-blue
-Author: Votre Nom
-Author URI: https://votre-site.com
-Description: Un thème WordPress moderne avec support Gutenberg, SCSS, et optimisé pour les performances
+Theme URI: https://github.com/nhithaivn/luther-blue
+Author: Nhi Thai
+Author URI:https://nhidev.vercel.app/
+Description: Modern WordPress theme with Gutenberg, SCSS support, and optimized for performance
 Version: 1.0.0
 Requires at least: 5.0
 Tested up to: 6.7.1
@@ -14,5 +14,5 @@ Text Domain: wp-luther-blue
 Domain Path: /languages
 */
 
-/* Importation des styles compilés */
+/* Importing Compiled Styles */
 @import "assets/css/style.css";
