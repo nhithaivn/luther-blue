@@ -125,42 +125,11 @@ get_header(); ?>
           <!-- ✅ Required WooCommerce Hidden Fields -->
           <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>">
           <input type="hidden" name="quantity" value="1">
-
           <button type="submit" class="submit-button">Add To Your Cart -
             <span id="dynamic-price" class="product-prize"><?php echo wc_price($product->get_price()); ?></span>
           </button>
         </form>
 
-        <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            const sizeRadios = document.querySelectorAll(".size-option input");
-            const priceElement = document.getElementById("dynamic-price");
-
-            if (sizeRadios.length > 0) {
-              // Select first available size by default
-              sizeRadios[0].checked = true;
-              updatePrice(sizeRadios[0]);
-            }
-
-            // Update price and variation ID when a size is selected
-            sizeRadios.forEach(radio => {
-              radio.addEventListener("change", function() {
-                updatePrice(this);
-              });
-            });
-
-            function updatePrice(selectedRadio) {
-              const price = selectedRadio.getAttribute("data-price");
-
-              if (price) {
-                priceElement.innerHTML = new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: '<?php echo get_woocommerce_currency(); ?>'
-                }).format(price);
-              }
-            }
-          });
-        </script>
 
       <?php endif; ?>
 
@@ -239,9 +208,13 @@ get_header(); ?>
           $image_url = wp_get_attachment_image_url($product->get_image_id(), 'medium') ?: wc_placeholder_img_src();
           $categories = wc_get_product_category_list($product_id, ', '); // Get categories
 
+          $default_variation = reset($available_variations);
+          $default_variation_id = $default_variation['variation_id'] ?? null;
+
           // Default price variables
           $regular_price = null;
           $sale_price = null;
+          $currency_symbol = get_woocommerce_currency_symbol();
 
           // Check if product is variable
           if ($product->is_type('variable')) {
@@ -254,7 +227,6 @@ get_header(); ?>
 
               $variation_regular_price = $variation_obj->get_regular_price();
               $variation_sale_price = $variation_obj->get_sale_price();
-
               // Find the lowest priced variation
               if ($smallest_price === null || $variation_regular_price < $smallest_price) {
                 $smallest_price = $variation_regular_price;
@@ -270,32 +242,46 @@ get_header(); ?>
 
           // Format price output
           if ($sale_price && $sale_price < $regular_price) {
-            $price_html = wc_price($sale_price);
+            $price_html = $currency_symbol . '' . $sale_price;
           } else {
-            $price_html = wc_price($regular_price);
+            $price_html = $currency_symbol . '' . $regular_price;
           }
       ?>
           <div class="product-item">
             <div class="product-image">
               <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
-
                 <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
               </a>
             </div>
-            <p class="category"><?php echo wp_kses_post($categories); ?></p>
+            <p class="category">
+              </php><?php echo wp_kses_post($categories); ?>
+            </p>
             <div class="product-title-price">
               <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
                 <h2 class="product-title"><?php echo esc_html($product->get_name()); ?></h2>
               </a>
               <div class="product-price">
-                <p class="regular-price"><?php echo wc_price($regular_price); ?></p>
+                <p class="regular-price"><?php echo $currency_symbol . '' . $regular_price; ?></p>
                 <?php if ($sale_price) : ?>
-                  <p class="current-price"><?php echo wc_price($sale_price); ?></p>
+                  <p class="current-price"><?php echo $currency_symbol . '' . $sale_price; ?></p>
                 <?php endif; ?>
               </div>
             </div>
             <p class="product-description"><?php echo $product->get_description();  ?></p>
-            <button type="submit" class="submit-button">Add To Your Cart - <span id="dynamic-price" class="product-prize"> <?php echo wp_kses_post($price_html); ?></span></button>
+
+            <form class="cart" method="post" enctype="multipart/form-data">
+              <?php
+              $available_variations = $product->get_available_variations();
+              $default_variation = reset($available_variations);
+              $default_variation_id = $default_variation['variation_id'] ?? null;
+              ?>
+
+              <!-- ✅ Required WooCommerce Hidden Fields -->
+              <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>">
+              <input type="hidden" name="quantity" value="1">
+              <input type="hidden" name="variation_id" value="<?php echo esc_attr($default_variation_id); ?>">
+              <button type="submit" class="submit-button">Add To Your Cart - <span id="dynamic-price" class="product-prize"> <?php echo wp_kses_post($price_html); ?></span></button>
+            </form>
           </div>
       <?php
         }
@@ -307,9 +293,35 @@ get_header(); ?>
   </div>
 </div>
 
-<!-- Slick Slider JS -->
 <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const sizeRadios = document.querySelectorAll(".size-option input");
+    const priceElement = document.getElementById("dynamic-price");
 
+    if (sizeRadios.length > 0) {
+      // Select first available size by default
+      sizeRadios[0].checked = true;
+      updatePrice(sizeRadios[0]);
+    }
+
+    // Update price and variation ID when a size is selected
+    sizeRadios.forEach(radio => {
+      radio.addEventListener("change", function() {
+        updatePrice(this);
+      });
+    });
+
+    function updatePrice(selectedRadio) {
+      const price = selectedRadio.getAttribute("data-price");
+
+      if (price) {
+        priceElement.innerHTML = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: '<?php echo get_woocommerce_currency(); ?>'
+        }).format(price);
+      }
+    }
+  });
 </script>
 
 <!-- // -->
