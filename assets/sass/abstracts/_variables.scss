@@ -29,6 +29,13 @@ $colors: (
 
 // Font families
 @font-face {
+  font-family: 'Sohne';
+  src: url('../../assets/fonts/Sohne/test-soehne-buch.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Kudryashev Display Sans';
   src: url('../../assets/fonts/KudryashevDisplay/KudryashevDisplay-Sans.eot');
   src: local('Kudryashev Display Sans'), local('KudryashevDisplay-Sans'),
