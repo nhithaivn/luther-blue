@@ -41,7 +41,7 @@ Text Domain: wp-luther-blue
 @use 'components/pagination';
 @use 'components/widgets';
 @use 'components/comments';
-@use 'components/popup-cart';
+@use 'components/cart_popup';
 
 /* Templates */
 @use 'templates/archive';

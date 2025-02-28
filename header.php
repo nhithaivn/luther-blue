@@ -82,22 +82,21 @@
           </nav>
           <div class="header-cart">
             <a href="#" class="cart-icon">
-              Cart <span class="cart-count">(<?php echo WC()->cart->get_cart_contents_count(); ?>)</span>
+              Cart (<span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
             </a>
           </div>
         </div>
       </div>
 
       <!-- /CART POPUP CONTENT/ -->
-      <div id="popup-cart" class="popup-cart">
-        <div class="popup-cart-content">
+      <div id="cart-popup" class="cart-popup">
+        <div class="cart-popup-content">
           <span class="close-popup">&times;</span>
           <h3>Your Cart (<?php echo WC()->cart->get_cart_contents_count(); ?>)</h3>
           <div class="cart-content">
             <?php woocommerce_mini_cart(); ?>
+         
           </div>
-          <a href="<?php echo wc_get_checkout_url(); ?>" class="button checkout">Go to Checkout</a>
-          <p>Free standard shipping Worldwide with orders over $80.</p>
         </div>
       </div>
     </header>

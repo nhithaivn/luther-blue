@@ -169,7 +169,7 @@ add_action('wp_enqueue_scripts', 'enqueue_slick_and_imagesloaded');
 function custom_enqueue_scripts()
 {
   wp_enqueue_script('jquery');
-  wp_enqueue_script('popup-cart', get_template_directory_uri() . '/assets/js/popup-cart.js', array('jquery'), null, true);
+  wp_enqueue_script('cart-popup', get_template_directory_uri() . '/assets/js/cart-popup.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
@@ -250,3 +250,48 @@ function custom_woocommerce_breadcrumb($breadcrumbs, $args)
   }
   return $breadcrumbs;
 }
+
+
+// Update Quantity Handler
+function update_cart_item_quantity()
+{
+  if (!isset($_POST['cart_item_key']) || !isset($_POST['operation'])) {
+    wp_send_json_error(['message' => 'Invalid request']);
+  }
+
+  $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
+  $operation = sanitize_text_field($_POST['operation']);
+  $cart = WC()->cart->get_cart();
+
+  if (!isset($cart[$cart_item_key])) {
+    wp_send_json_error(['message' => 'Cart item not found']);
+  }
+
+  $current_qty = $cart[$cart_item_key]['quantity'];
+  $new_qty = ($operation === 'increase') ? $current_qty + 1 : max(1, $current_qty - 1);
+
+  WC()->cart->set_quantity($cart_item_key, $new_qty, true);
+  WC()->cart->calculate_totals();
+
+  $updated_cart_item = WC()->cart->get_cart()[$cart_item_key];
+  $product = $updated_cart_item['data'];
+  $item_total = wc_price($product->get_price() * $new_qty);
+  $product_name = $product->get_name();
+  $product_description = wp_trim_words($product->get_short_description(), 10);
+
+  // Check for Size Attribute
+  $product_size = isset($updated_cart_item['variation']['attribute_pa_size']) ? $updated_cart_item['variation']['attribute_pa_size'] : '';
+
+  wp_send_json_success([
+    'quantity' => $new_qty,
+    'item_total' => $item_total,
+    'cart_total' => WC()->cart->get_cart_total(),
+    'cart_count' => WC()->cart->get_cart_contents_count(),
+    'product_name' => $product_name,
+    'product_description' => $product_description,
+    'product_size' => $product_size,
+  ]);
+}
+add_action('wp_ajax_update_cart_item_quantity', 'update_cart_item_quantity');
+add_action('wp_ajax_nopriv_update_cart_item_quantity', 'update_cart_item_quantity');
+

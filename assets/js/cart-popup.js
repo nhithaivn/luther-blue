@@ -2,16 +2,16 @@
 jQuery(document).ready(function ($) {
   // Open/Close popup
   $('.cart-icon').click(function () {
-    $('#popup-cart').fadeIn();
+    $('#cart-popup').fadeIn();
   });
 
   $('.close-popup').click(function () {
-    $('#popup-cart').fadeOut();
+    $('#cart-popup').fadeOut();
   });
 
   $(document).mouseup(function (e) {
-    if (!$("#popup-cart .popup-cart-content").is(e.target) && $("#popup-cart .popup-cart-content").has(e.target).length === 0) {
-      $("#popup-cart").fadeOut();
+    if (!$("#cart-popup .cart-popup-content").is(e.target) && $("#cart-popup .cart-popup-content").has(e.target).length === 0) {
+      $("#cart-popup").fadeOut();
     }
   });
 
