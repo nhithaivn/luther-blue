@@ -11,7 +11,7 @@
   z-index: map.get($z-index, 'sticky');
   backdrop-filter: blur(8px);
   padding: map.get($spacers, 3) 0;
-  min-height: 67px;
+  min-height: 60px;
 
   &__container {
     position: relative;
@@ -65,6 +65,26 @@
     margin: map.get($spacers, 1) 0 0;
     font-size: map.get($font-sizes, 'sm');
     color: map.get($colors, 'gray', 600);
+  }
+
+  @media (max-width: 767px) {
+    &__container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &__branding {
+      min-width: auto;
+      margin: auto;
+      padding-left: 80px;
+    }
+
+    &__logo {
+      img {
+        max-height: 20px;
+      }
+    }
   }
 }
 

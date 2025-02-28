@@ -52,7 +52,6 @@
           <span class="site-nav__toggle-icon">
             <span class="site-nav__toggle-line"></span>
             <span class="site-nav__toggle-line"></span>
-            <span class="site-nav__toggle-line"></span>
           </span>
           <span class="screen-reader-text">
             <?php esc_html_e('Menu', 'wp-luther-blue'); ?>

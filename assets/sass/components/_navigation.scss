@@ -6,74 +6,6 @@
 .main-navigation {
   width: 100%;
 
-  .nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    @include mix.breakpoint('md') {
-      flex-wrap: nowrap;
-    }
-
-    /* Menu Item */
-    .menu-item {
-      position: relative;
-
-      a {
-        display: block;
-        padding: map.get($spacers, 2) map.get($spacers, 3);
-        color: map.get($colors, 'dark');
-        text-decoration: none;
-        transition: map.get($transitions, 'base');
-        font-weight: 500;
-
-        @include mix.hover {
-          color: map.get($colors, 'primary');
-        }
-      }
-
-      &.current-menu-item>a {
-        color: map.get($colors, 'primary');
-        font-weight: 600;
-      }
-
-      /* Submenus */
-      .sub-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: map.get($z-index, 'dropdown');
-        min-width: 200px;
-        margin: 0;
-        padding: map.get($spacers, 2) 0;
-        list-style: none;
-        background-color: map.get($colors, 'white');
-        border-radius: map.get($border-radius, 'md');
-        box-shadow: map.get($shadows, 'md');
-
-        .menu-item {
-          a {
-            padding: map.get($spacers, 2) map.get($spacers, 3);
-            color: map.get($colors, 'gray', 700);
-
-            @include mix.hover {
-              background-color: map.get($colors, 'gray', 50);
-              color: map.get($colors, 'primary');
-            }
-          }
-        }
-      }
-
-      &:hover>.sub-menu,
-      &:focus-within>.sub-menu {
-        display: block;
-      }
-    }
-  }
-
   /* Menu mobile */
   .menu-toggle {
     display: block;
@@ -112,40 +44,14 @@
   }
 }
 
-/* Navigation pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: map.get($spacers, 5) 0;
 
-  .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 2.5rem;
-    height: 2.5rem;
-    margin: 0 map.get($spacers, 1);
-    padding: 0 map.get($spacers, 2);
-    color: map.get($colors, 'gray', 700);
-    text-decoration: none;
-    border-radius: map.get($border-radius, 'md');
-    transition: map.get($transitions, 'base');
-
-    @include mix.hover {
-      background-color: map.get($colors, 'gray', 100);
-      color: map.get($colors, 'primary');
-    }
-
-    &.current {
-      background-color: map.get($colors, 'primary');
-      color: map.get($colors, 'white');
-    }
+.left-menu {
+  @media (max-width: 767px) {
+    display: none;
   }
 }
 
 .site-nav {
-
   @media (max-width: 767px) {
     position: fixed;
     top: 0;
@@ -209,33 +115,6 @@
     }
   }
 
-  /* Submenus */
-  .sub-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: map.get($z-index, 'dropdown');
-    min-width: 200px;
-    margin: 0;
-    padding: map.get($spacers, 2) 0;
-    list-style: none;
-    background-color: map.get($colors, 'white');
-    border-radius: map.get($border-radius, 'md');
-    box-shadow: map.get($shadows, 'md');
-
-    @media (max-width: 767px) {
-      position: static;
-      box-shadow: none;
-      padding-left: map.get($spacers, 3);
-    }
-  }
-
-  &__item:hover>.sub-menu,
-  &__item:focus-within>.sub-menu {
-    display: block;
-  }
-
   /* Toggle button */
   &__toggle {
     display: none;
@@ -247,17 +126,22 @@
     @media (max-width: 767px) {
       display: block;
       position: absolute;
-      top: 0.5rem;
-      right: 1rem;
+      top: -6px;
+      bottom: 0;
+      left: 1rem;
       z-index: calc(#{map.get($z-index, 'modal')} + 1);
+
+      &:hover {
+        background-color: transparent;
+      }
     }
 
     &-line {
       display: block;
       width: 24px;
-      height: 2px;
-      margin: 4px 0;
-      background-color: map.get($colors, 'gray', 700);
+      height: 1px;
+      margin: 6px 0;
+      background-color: #262624;
       transition: map.get($transitions, 'base');
 
       &:nth-child(1) {
@@ -280,7 +164,7 @@
         }
 
         &:nth-child(2) {
-          opacity: 0;
+          transform: rotate(-45deg) translate(0px, 0px)
         }
 
         &:nth-child(3) {
