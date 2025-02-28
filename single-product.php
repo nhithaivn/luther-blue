@@ -91,15 +91,23 @@ get_header(); ?>
         echo '<p class="product-text">No aroma available.</p>';
       }
       ?>
-      <p class="sub-title">Key Ingredients</p>
+      <div class="sub-title-icon">
+        <p class="sub-title">Key Ingredients</p>
+        <button class="read-more-btn">+</button>
+      </div>
       <?php
       $ingredients = get_field('ingredients', $product->get_id());
-      if ($ingredients) {
-        echo '<p class="product-text">' . wp_kses_post($ingredients) . '</p>'; // Safely output textarea with formatting
-      } else {
-        echo '<p class="product-text">No ingredients available.</p>';
-      }
+      if ($ingredients):
       ?>
+        <div class="product-text-container">
+          <p class="product-text short-text"><?php echo wp_kses_post($ingredients); ?></p>
+        </div>
+      <?php
+      else:
+        echo '<p class="product-text">No ingredients available.</p>';
+      endif;
+      ?>
+
 
       <?php if ($product->is_type('variable')) : ?>
         <form class="cart" method="post" enctype="multipart/form-data">

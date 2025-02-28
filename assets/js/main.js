@@ -267,3 +267,14 @@
 
 
 //CUSTOM
+jQuery(document).ready(function ($) {
+  var text = $(".short-text");
+  var btn = $(".read-more-btn");
+
+  if (text.length && btn.length) { // Ensure elements exist
+    btn.click(function () {
+      text.toggleClass("expanded");
+      btn.text(text.hasClass("expanded") ? "−" : "+");
+    });
+  }
+});
