@@ -12,13 +12,29 @@ jQuery(document).ready(function ($) {
     $('.product-thumbs').slick({
       slidesToShow: 4,
       slidesToScroll: 1,
+      initialSlide: false,
       asNavFor: '.product-slider',
       dots: false,
-      centerMode: false,
       focusOnSelect: true,
       arrows: false,
       vertical: true,
-      verticalSwiping: true
+      verticalSwiping: true,
+      responsive: [{
+        breakpoint: 768,
+        settings: {
+          vertical: false,
+          verticalSwiping: false,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2.7,
+          vertical: false,
+          verticalSwiping: false,
+        }
+      }
+      ]
     });
   });
 });
@@ -27,7 +43,7 @@ jQuery(document).ready(function ($) {
   $(".relate-product-slider").slick({
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     dots: true,
     arrows: false,
@@ -46,7 +62,7 @@ jQuery(document).ready(function ($) {
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 1
+        slidesToShow: 1.2
       }
     }
     ]

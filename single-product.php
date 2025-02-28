@@ -43,7 +43,15 @@ get_header(); ?>
         }
         ?>
       </div>
-
+      <!-- /SHOW ON MOBILE/ -->
+      <div class="product-top-info">
+        <?php
+        woocommerce_breadcrumb()
+        ?>
+        <h1 class="product-title"><?php the_title(); ?></h1>
+        <p class="product-description"><?php echo $product->get_description();  ?></p>
+      </div>
+      <!-- /SHOW ON MOBILE/ -->
       <div class="product-thumbs">
         <?php
         // Add main product thumbnail
@@ -68,11 +76,16 @@ get_header(); ?>
 
     <!-- Right Section: Product Information -->
     <div class="product-info-wrap">
-      <?php
-      woocommerce_breadcrumb()
-      ?>
-      <h1 class="product-title"><?php the_title(); ?></h1>
-      <p class="product-description"><?php echo $product->get_description();  ?></p>
+      <!-- /SHOW ON DESKTOP/ -->
+      <div class="product-top-info">
+        <?php
+        woocommerce_breadcrumb()
+        ?>
+        <h1 class="product-title"><?php the_title(); ?></h1>
+        <p class="product-description"><?php echo $product->get_description();  ?></p>
+      </div>
+      <!-- /SHOW ON DESKTOP/ -->
+
       <p class="sub-title">Features</p>
       <?php
       $features = get_field('features', $product->get_id());
