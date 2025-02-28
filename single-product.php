@@ -73,7 +73,7 @@ get_header(); ?>
       ?>
       <h1 class="product-title"><?php the_title(); ?></h1>
       <p class="product-description"><?php echo $product->get_description();  ?></p>
-      <p class="sub-titile">Features</p>
+      <p class="sub-title">Features</p>
       <?php
       $features = get_field('features', $product->get_id());
       if ($features) {
@@ -82,7 +82,7 @@ get_header(); ?>
         echo '<p class="product-text">No features available.</p>';
       }
       ?>
-      <p class="sub-titile">Aroma</p>
+      <p class="sub-title">Aroma</p>
       <?php
       $aroma = get_field('aroma', $product->get_id());
       if ($aroma) {
@@ -91,7 +91,7 @@ get_header(); ?>
         echo '<p class="product-text">No aroma available.</p>';
       }
       ?>
-      <p class="sub-titile">Key Ingredients</p>
+      <p class="sub-title">Key Ingredients</p>
       <?php
       $ingredients = get_field('ingredients', $product->get_id());
       if ($ingredients) {
@@ -103,7 +103,7 @@ get_header(); ?>
 
       <?php if ($product->is_type('variable')) : ?>
         <form class="cart" method="post" enctype="multipart/form-data">
-          <p class="sub-titile">Select Size</p>
+          <p class="sub-title">Select Size</p>
           <div class="product-sizes">
             <?php
             $available_variations = $product->get_available_variations();
