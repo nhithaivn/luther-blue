@@ -180,10 +180,10 @@ get_header(); ?>
         ?>
       </div>
       <?php
-      $benefits_image = get_field('benefits_image');
+      $benefit_image = get_field('benefit_image');
 
-      if ($benefits_image) {
-        echo '<img src="' . esc_url($benefits_image) . '" alt="how to use">';
+      if ($benefit_image) {
+        echo '<img src="' . esc_url($benefit_image) . '" alt="how to use">';
       }
       ?>
     </div>

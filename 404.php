@@ -5,12 +5,12 @@ get_header();
 <main id="primary" class="site-main">
   <section class="error-404 not-found">
     <header class="page-header">
-      <h1 class="page-title"><?php esc_html_e('Oups ! Cette page est introuvable.', 'wp-luther-blue'); ?></h1>
+      <h1 class="page-title"><?php esc_html_e('Oops! This page could not be found.', 'wp-luther-blue'); ?></h1>
     </header>
 
     <div class="page-content">
       <p>
-        <?php esc_html_e('Il semble que rien n\'a été trouvé à cet endroit. Essayez peut-être une recherche ?', 'wp-luther-blue'); ?>
+        <?php esc_html_e('It looks like nothing was found at this location. Maybe try a search?', 'wp-luther-blue'); ?>
       </p>
 
       <?php get_search_form(); ?>
@@ -38,7 +38,7 @@ get_header();
         </div>
 
         <?php
-        $archive_content = '<p>' . sprintf(esc_html__('Essayez de regarder dans les archives mensuelles. %1$s', 'wp-luther-blue'), convert_smilies(':)')) . '</p>';
+        $archive_content = '<p>' . sprintf(esc_html__('Try looking in the monthly archives. %1$s', 'wp-luther-blue'), convert_smilies(':)')) . '</p>';
         the_widget('WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content");
         ?>
       </div>
