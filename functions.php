@@ -191,3 +191,62 @@ function update_cart_count($fragments)
   $fragments['.cart-count'] = ob_get_clean();
   return $fragments;
 }
+
+
+///Login to menu
+function add_login_logout_register_menu($items, $args)
+{
+  if ($args->theme_location != 'primary') {
+    return $items;
+  }
+
+  if (is_user_logged_in()) {
+    $items .= '<li><a href="' . wp_logout_url() . '">Log Out</a></li>';
+  } else {
+    $items .= '<li><a href="' . wp_login_url() . '">Log In</a></li>';
+  }
+
+  return $items;
+}
+
+// CUSTOM ADD LOGIN TO MENU
+add_filter('wp_nav_menu_items', 'add_login_logout_register_menu', 199, 2);
+
+// CUSTOM WOOCOMMERE BREADCRUMB
+add_filter('woocommerce_breadcrumb', 'custom_woocommerce_breadcrumb', 20, 2);
+
+function custom_woocommerce_breadcrumb($breadcrumbs, $args)
+{
+  if (is_product()) {
+    // Get the product categories
+    global $post;
+    $terms = wp_get_post_terms($post->ID, 'product_cat');
+
+
+    // Check if categories are found
+    if (! empty($terms)) {
+      // Get the last two categories
+      $categories = array_slice($terms, -2);
+
+      // Get the current breadcrumbs object
+      $new_breadcrumbs = $categories;
+
+      // Rebuild breadcrumbs, skipping all but the last two categories
+      foreach ($breadcrumbs as $key => $crumb) {
+        // We will skip the default categories and keep the home, shop, and any other breadcrumbs
+        if (isset($crumb[1]) && strpos($crumb[1], 'product-category') === false) {
+          $new_breadcrumbs[] = $crumb;
+        }
+      }
+      // Add the last two categories to the breadcrumbs
+      foreach ($categories as $category) {
+        $new_breadcrumbs[] = array($category->name, get_term_link($category));
+      }
+
+      // Return the updated breadcrumbs
+
+      return $new_breadcrumbs;
+    }
+  }
+  return $breadcrumbs;
+}

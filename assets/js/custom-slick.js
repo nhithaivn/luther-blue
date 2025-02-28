@@ -6,26 +6,26 @@ jQuery(document).ready(function ($) {
       arrows: false,
       fade: true,
       adaptiveHeight: false,
-      asNavFor: '.product-thumbs' // Link to thumbnail slider
+      asNavFor: '.product-thumbs'
     });
 
     $('.product-thumbs').slick({
-      slidesToShow: 4, // Adjust the number of thumbnails shown
+      slidesToShow: 4,
       slidesToScroll: 1,
-      asNavFor: '.product-slider', // Link to main slider
+      asNavFor: '.product-slider',
       dots: false,
       centerMode: false,
       focusOnSelect: true,
       arrows: false,
-      vertical: true, // Make it vertical
-      verticalSwiping: true // Enable vertical swiping
+      vertical: true,
+      verticalSwiping: true
     });
   });
 });
 
 jQuery(document).ready(function ($) {
   $(".relate-product-slider").slick({
-    slidesToShow: 3, // Number of slides visible at a time
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,

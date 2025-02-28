@@ -39,7 +39,7 @@
               <?php echo get_the_date(); ?>
             </time>
             <span class="post-card__author">
-              <?php esc_html_e('par', 'wp-luther-blue'); ?>
+              <?php esc_html_e('by', 'wp-luther-blue'); ?>
               <?php the_author_posts_link(); ?>
             </span>
           </div>

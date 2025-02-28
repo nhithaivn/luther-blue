@@ -93,7 +93,7 @@ $font-families: (
     Arial,
     sans-serif,
   ),
-  'heading': ('Kudryashev Display Sans', sans-serif),
+  'heading': ('Kudryashev Display', sans-serif),
   'monospace': (SFMono-Regular,
     Menlo,
     Monaco,
@@ -105,9 +105,10 @@ $font-families: (
 );
 
 // Typographie
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+$font-family-base: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
   Cantarell, 'Helvetica Neue', sans-serif;
-$font-family-headings: $font-family-base;
+$font-family-headings: 'Kudryashev Display', -apple-system, BlinkMacSystemFont, ' Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, 'Helvetica Neue', sans-serif;
 
 $font-sizes: (
   'xs': 0.75rem,
@@ -254,14 +255,13 @@ $grid: (
   --color-info: #17a2b8;
 
   // Typography
-  --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue',
-    sans-serif;
-  --font-family-headings: var(--font-family-base);
+  --font-family-base: "Söhne", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-headings: 'Kudryashev Display', -apple-system, BlinkMacSystemFont, ' Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   --font-size-base: 1rem;
   --line-height-base: 1.5;
 
   // Layout
-  --container-width: 1200px;
+  --container-width: 1290px;
   --container-padding: 1rem;
   --grid-gap: 2rem;
 

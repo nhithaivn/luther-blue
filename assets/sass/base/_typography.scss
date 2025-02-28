@@ -21,7 +21,7 @@ h6 {
   font-family: var(--font-family-headings);
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 h1 {
@@ -49,7 +49,7 @@ h6 {
 }
 
 p {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 
   &:last-child {
     margin-bottom: 0;
@@ -63,7 +63,7 @@ a {
 
   @include hover {
     color: var(--color-primary-dark, #cf6611);
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 }
 

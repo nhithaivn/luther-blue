@@ -68,9 +68,12 @@ get_header(); ?>
 
     <!-- Right Section: Product Information -->
     <div class="product-info-wrap">
+      <?php
+      woocommerce_breadcrumb()
+      ?>
       <h1 class="product-title"><?php the_title(); ?></h1>
       <p class="product-description"><?php echo $product->get_description();  ?></p>
-      <p><strong>Features</strong></p>
+      <p class="sub-titile">Features</p>
       <?php
       $features = get_field('features', $product->get_id());
       if ($features) {
@@ -79,7 +82,7 @@ get_header(); ?>
         echo '<p class="product-text">No features available.</p>';
       }
       ?>
-      <p><strong>Aroma</strong></p>
+      <p class="sub-titile">Aroma</p>
       <?php
       $aroma = get_field('aroma', $product->get_id());
       if ($aroma) {
@@ -88,7 +91,7 @@ get_header(); ?>
         echo '<p class="product-text">No aroma available.</p>';
       }
       ?>
-      <p><strong>Key Ingredients</strong></p>
+      <p class="sub-titile">Key Ingredients</p>
       <?php
       $ingredients = get_field('ingredients', $product->get_id());
       if ($ingredients) {
@@ -100,8 +103,8 @@ get_header(); ?>
 
       <?php if ($product->is_type('variable')) : ?>
         <form class="cart" method="post" enctype="multipart/form-data">
+          <p class="sub-titile">Select Size</p>
           <div class="product-sizes">
-            <p><strong>Select Size</strong></p>
             <?php
             $available_variations = $product->get_available_variations();
             $default_variation = reset($available_variations);
@@ -133,7 +136,7 @@ get_header(); ?>
 
       <?php endif; ?>
 
-      <p><strong>Pay With Afterpay</strong></p>
+      <p class="note">Pay With Afterpay</p>
       <?php
       $note = get_field('note', $product->get_id());
       if ($note) {
@@ -147,7 +150,7 @@ get_header(); ?>
   <div class="more-info">
     <div class="odd-card">
       <div class="card-text">
-        <p><strong>The benefits</strong></p>
+        <p class="sub-title">The Benefits</p>
         <?php
         $benefits = get_field('benefits', $product->get_id());
         if ($benefits) {
@@ -248,11 +251,9 @@ get_header(); ?>
           }
       ?>
           <div class="product-item">
-            <div class="product-image">
-              <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
-                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
-              </a>
-            </div>
+            <a class="product-image" href="<?php echo esc_url(get_permalink($product_id)); ?>">
+              <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($product->get_name()); ?>" loading="lazy">
+            </a>
             <p class="category">
               </php><?php echo wp_kses_post($categories); ?>
             </p>
