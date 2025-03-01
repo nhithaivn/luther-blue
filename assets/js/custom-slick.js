@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
   $(".relate-product-slider").slick({
     slidesToShow: 2.8,
     slidesToScroll: 1,
-    initialSlide: 0,
+    initialSlide: false,
     autoplay: false,
     autoplaySpeed: 3000,
     dots: true,
