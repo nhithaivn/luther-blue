@@ -249,52 +249,8 @@ $content-max-width: 800px;
 }
 
 // Adding styles for breadcrumb
-.breadcrumb {
-  margin: map.get($spacers, 4) 0;
-  padding: map.get($spacers, 2) map.get($spacers, 4);
-  font-size: map.get($font-sizes, 'sm');
-  color: map.get($colors, 'gray', 600);
-  background-color: map.get($colors, 'gray', 50);
-  border-radius: map.get($border-radius, 'lg');
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: map.get($spacers, 2);
 
-  a {
-    color: map.get($colors, 'primary');
-    text-decoration: none;
-    transition: all 0.2s ease;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-
-    &:hover {
-      color: map.get($colors, 'primary-dark');
-      text-decoration: underline;
-    }
-
-    &:not(:last-child)::after {
-      content: '/';
-      margin-left: map.get($spacers, 2);
-      color: map.get($colors, 'gray', 400);
-      text-decoration: none;
-      display: inline-block;
-    }
-  }
-
-  span {
-    color: map.get($colors, 'gray', 700);
-    font-weight: 500;
-  }
-
-  @include breakpoint('md') {
-    margin: map.get($spacers, 6) 0 map.get($spacers, 4);
-    padding: map.get($spacers, 3) map.get($spacers, 6);
-  }
-}
-
-.woocommerce .woocommerce-breadcrumb {
+.custom-breadcrumb {
   padding: 40px 0 0;
   margin-bottom: 20px;
 

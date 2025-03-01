@@ -46,7 +46,7 @@ get_header(); ?>
       <!-- /SHOW ON MOBILE/ -->
       <div class="product-top-info">
         <?php
-        woocommerce_breadcrumb()
+        custom_product_breadcrumb()
         ?>
         <h1 class="product-title"><?php the_title(); ?></h1>
         <p class="product-description"><?php echo $product->get_description();  ?></p>
@@ -79,7 +79,7 @@ get_header(); ?>
       <!-- /SHOW ON DESKTOP/ -->
       <div class="product-top-info">
         <?php
-        woocommerce_breadcrumb()
+        custom_product_breadcrumb()
         ?>
         <h1 class="product-title"><?php the_title(); ?></h1>
         <p class="product-description"><?php echo $product->get_description();  ?></p>

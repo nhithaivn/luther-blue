@@ -173,13 +173,6 @@ function custom_enqueue_scripts()
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
-// function custom_add_to_cart_redirect()
-// {
-//   return wc_get_cart_url();
-// }
-// add_filter('woocommerce_add_to_cart_redirect', 'custom_add_to_cart_redirect');
-
-
 //Cart popup
 add_filter('woocommerce_add_to_cart_fragments', 'update_cart_count');
 function update_cart_count($fragments)
@@ -294,4 +287,48 @@ function update_cart_item_quantity()
 }
 add_action('wp_ajax_update_cart_item_quantity', 'update_cart_item_quantity');
 add_action('wp_ajax_nopriv_update_cart_item_quantity', 'update_cart_item_quantity');
+//BREADCRUMB
+function custom_product_breadcrumb()
+{
+  if (!is_product()) return;
 
+  global $post;
+
+  // Get product categories
+  $terms = get_the_terms($post->ID, 'product_cat');
+
+  if ($terms && !is_wp_error($terms)) {
+    // Sort categories by hierarchy
+    usort($terms, function ($a, $b) {
+      return $a->parent - $b->parent;
+    });
+
+    // Get last two parent categories
+    $category_chain = [];
+    $current_term = end($terms);
+
+    while ($current_term && count($category_chain) < 2) {
+      $category_chain[] = $current_term;
+      if ($current_term->parent) {
+        $current_term = get_term($current_term->parent, 'product_cat');
+      } else {
+        break;
+      }
+    }
+
+    $category_chain = array_reverse($category_chain); // Reverse for correct order
+
+    // Display breadcrumb without "Home" and "Product Name"
+    echo '<nav class="custom-breadcrumb">';
+    foreach ($category_chain as $index => $category) {
+      echo '<a href="' . get_term_link($category) . '">' . esc_html($category->name) . '</a>';
+      if ($index < count($category_chain) - 1) {
+        echo ' ⋅ ';
+      }
+    }
+    echo '</nav>';
+  }
+}
+
+// Hook into WooCommerce single product page
+add_action('woocommerce_before_single_product', 'custom_product_breadcrumb', 5);
