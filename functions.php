@@ -251,7 +251,6 @@ function update_cart_count($fragments)
 }
 
 //Increase / Decrease Cart Quantity
-
 function update_cart_item()
 {
   if (!isset($_POST['cart_item_key']) || !isset($_POST['operation'])) {
@@ -267,7 +266,7 @@ function update_cart_item()
   }
 
   $cart_item = $cart[$cart_item_key];
-  $new_qty = ($operation === 'increase') ? $cart_item['quantity'] + 1 : $cart_item['quantity'] - 1;
+  $new_qty = ($operation === 'increase') ? $cart_item['quantity'] + 1 : max(0, $cart_item['quantity'] - 1);
 
   if ($new_qty > 0) {
     WC()->cart->set_quantity($cart_item_key, $new_qty);
@@ -275,13 +274,15 @@ function update_cart_item()
     WC()->cart->remove_cart_item($cart_item_key);
   }
 
+  // **Recalculate totals before fetching new total**
   WC()->cart->calculate_totals();
+  WC()->cart->set_session(); // Ensure session updates
 
   wp_send_json_success([
     'cart_item_key' => $cart_item_key,
     'cart_qty' => $new_qty,
-    'item_total' => wc_price($cart_item['line_total']),
-    'cart_total' => WC()->cart->get_cart_total(),
+    'item_total' => wc_price(WC()->cart->get_cart_item($cart_item_key)['line_total'] ?? 0),
+    'cart_total' => WC()->cart->get_cart_total(), // Ensure latest cart total
     'cart_count' => WC()->cart->get_cart_contents_count()
   ]);
 }
@@ -289,7 +290,6 @@ add_action('wp_ajax_update_cart_item', 'update_cart_item');
 add_action('wp_ajax_nopriv_update_cart_item', 'update_cart_item');
 
 // Remove Item from Cart
-
 function remove_cart_item()
 {
   if (!isset($_POST['cart_item_key'])) {

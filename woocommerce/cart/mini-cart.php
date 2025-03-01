@@ -62,7 +62,7 @@ do_action('woocommerce_before_mini_cart'); ?>
   </p>
   <a href="<?php echo wc_get_checkout_url(); ?>" class="button checkout">Go to Checkout
     <span class="dot"> &sdot; </span>
-    <span><?php echo WC()->cart->get_cart_total(); ?>
+    <span class="cart-total-price"><?php echo WC()->cart->get_cart_total(); ?>
     </span>
   </a>
   <p class="note">Free standard shipping Worldwide with orders over $80.</p>

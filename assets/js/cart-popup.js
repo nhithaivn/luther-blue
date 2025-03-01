@@ -32,8 +32,9 @@ jQuery(document).ready(function ($) {
 
 jQuery(document).ready(function ($) {
   function updateMiniCart(response) {
-    $('.cart-total-price').html(response.cart_total);
-    $('.cart-item-count').html(response.cart_count);
+    $('.cart-total-price').html(response.cart_total); // Update total price
+    $('.checkout .cart-total-price').html(response.cart_total); // Ensure checkout button also updates
+
     $('.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"] .cart-item-qty').html(response.cart_qty);
     $('.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"] .cart-item-price').html(response.item_total);
 
@@ -61,22 +62,5 @@ jQuery(document).ready(function ($) {
       }
     });
   });
-
-  $('.delete-cart-item').on('click', function () {
-    let cartItemKey = $(this).data('cart-item');
-
-    $.ajax({
-      type: 'POST',
-      url: custom_cart_ajax.ajax_url,
-      data: {
-        action: 'remove_cart_item',
-        cart_item_key: cartItemKey
-      },
-      success: function (response) {
-        if (response.success) {
-          updateMiniCart(response.data);
-        }
-      }
-    });
-  });
 });
+
