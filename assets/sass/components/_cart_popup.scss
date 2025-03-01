@@ -48,6 +48,7 @@
   position: relative;
   background-color: #f7f4ec;
   padding: 39px 0;
+  overflow: auto;
 
   h3 {
     font-family: map.get($font-families, 'heading');

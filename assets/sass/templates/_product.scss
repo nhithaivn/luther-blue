@@ -32,7 +32,7 @@
   position: relative;
 
   .product-slider {
-    max-width: 85%;
+    max-width: 84%;
     border-left: 1px solid #000000;
 
     .slick-list {
@@ -72,7 +72,7 @@
         display: flex;
         border: none;
         border-bottom: 1px solid #000000;
-        border-left: 2px solid #000000;
+        border-left: 1px solid #000000;
         height: 120px;
         box-sizing: border-box;
         overflow: hidden;
@@ -252,7 +252,7 @@
     color: #333333;
     border: 1px solid #333333;
     line-height: 11px;
-    padding: 4px;
+    padding: 1px 4px 3px;
     width: 20px;
     height: 20px;
     cursor: pointer;
