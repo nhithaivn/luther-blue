@@ -296,6 +296,15 @@ $content-max-width: 800px;
 
 .woocommerce .woocommerce-breadcrumb {
   padding: 40px 0 0;
+  margin-bottom: 20px;
+
+  a {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 1%;
+    color: #333333;
+
+  }
 }
 
 /* Page Styles */
