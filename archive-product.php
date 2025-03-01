@@ -33,10 +33,10 @@ get_header('shop');
 
   do_action('woocommerce_after_main_content');
   ?>
-  <header class="shop-header">
+  <!-- <header class="shop-header">
     <h1><?php woocommerce_page_title(); ?></h1>
   </header>
-
+ -->
 
   <ul class="product-grid">
     <?php

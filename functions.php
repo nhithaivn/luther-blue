@@ -168,49 +168,76 @@ add_action('wp_enqueue_scripts', 'enqueue_slick_and_imagesloaded');
 //BREADCRUMB
 function custom_product_breadcrumb()
 {
-  if (!is_product()) return;
+  if (is_product()) {
+    global $post;
+    $terms = get_the_terms($post->ID, 'product_cat');
 
-  global $post;
+    if ($terms && !is_wp_error($terms)) {
+      usort($terms, function ($a, $b) {
+        return $a->parent - $b->parent;
+      });
 
-  // Get product categories
-  $terms = get_the_terms($post->ID, 'product_cat');
+      $category_chain = [];
+      $current_term = end($terms);
 
-  if ($terms && !is_wp_error($terms)) {
-    // Sort categories by hierarchy
-    usort($terms, function ($a, $b) {
-      return $a->parent - $b->parent;
-    });
-
-    // Get last two parent categories
-    $category_chain = [];
-    $current_term = end($terms);
-
-    while ($current_term && count($category_chain) < 2) {
-      $category_chain[] = $current_term;
-      if ($current_term->parent) {
-        $current_term = get_term($current_term->parent, 'product_cat');
-      } else {
-        break;
+      while ($current_term && count($category_chain) < 2) {
+        array_unshift($category_chain, $current_term); // Prepend to maintain order
+        $current_term = $current_term->parent ? get_term($current_term->parent, 'product_cat') : null;
       }
+
+      echo '<nav class="custom-breadcrumb">';
+      foreach ($category_chain as $index => $category) {
+        printf(
+          '<a href="%s">%s</a>%s',
+          esc_url(get_term_link($category)),
+          esc_html($category->name),
+          ($index < count($category_chain) - 1) ? ' <span class="breadcrumb-separator">⋅</span> ' : ''
+        );
+      }
+      echo '</nav>';
     }
-
-    $category_chain = array_reverse($category_chain); // Reverse for correct order
-
-    // Display breadcrumb without "Home" and "Product Name"
+  } elseif (is_shop() || is_product_category() || is_product_tag()) {
     echo '<nav class="custom-breadcrumb">';
-    foreach ($category_chain as $index => $category) {
-      echo '<a href="' . get_term_link($category) . '">' . esc_html($category->name) . '</a>';
-      if ($index < count($category_chain) - 1) {
-        echo ' ⋅ ';
+
+    // Add Home link
+    echo '<a href="' . esc_url(home_url('/')) . '">' . esc_html__('Home', 'woocommerce') . '</a>';
+    echo ' <span class="breadcrumb-separator">⋅</span> ';
+
+    // Add Shop link
+    echo '<a href="' . esc_url(get_permalink(wc_get_page_id('shop'))) . '">' . esc_html__('Shop', 'woocommerce') . '</a>';
+
+    if (is_product_category() || is_product_tag()) {
+      $term = get_queried_object();
+
+      if ($term && isset($term->term_id)) {
+        $parent_terms = [];
+        $current_term = $term;
+
+        while ($current_term->parent) {
+          $current_term = get_term($current_term->parent, 'product_cat');
+          if ($current_term) {
+            array_unshift($parent_terms, $current_term);
+          }
+        }
+
+        foreach ($parent_terms as $parent) {
+          echo ' <span class="breadcrumb-separator">⋅</span> ';
+          echo '<a href="' . esc_url(get_term_link($parent)) . '">' . esc_html($parent->name) . '</a>';
+        }
+
+        echo ' <span class="breadcrumb-separator">⋅</span> ';
+        echo '<span class="current">' . esc_html($term->name) . '</span>';
       }
     }
     echo '</nav>';
   }
 }
 
-// Hook into WooCommerce single product page
-add_action('woocommerce_before_single_product', 'custom_product_breadcrumb', 5);
+// Remove WooCommerce default breadcrumb
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
+// Add custom breadcrumb
+add_action('woocommerce_before_main_content', 'custom_product_breadcrumb', 15);
 
 ///CUSTOM ADD LOGIN TO MENU
 function add_login_logout_register_menu($items, $args)
