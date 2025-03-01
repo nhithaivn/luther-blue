@@ -29,21 +29,29 @@ jQuery(document).ready(function ($) {
   });
 });
 
-
 jQuery(document).ready(function ($) {
   function updateMiniCart(response) {
-    $('.cart-count').text(response.cart_count); // Update cart count in all locations
+    $('.cart-count').text(response.cart_count); // Update cart count
     $('.cart-total-price').html(response.cart_total); // Update total price
 
-    $('.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"] .cart-item-qty').html(response.cart_qty);
-    $('.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"] .cart-item-price').html(response.item_total);
+    if (response.cart_item_key) {
+      let itemSelector = '.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"]';
 
-    if (response.cart_qty === 0) {
-      $('.mini-cart-item[data-cart-item-key="' + response.cart_item_key + '"]').remove();
+      if (response.cart_qty > 0) {
+        $(itemSelector + ' .cart-item-qty').html(response.cart_qty);
+        $(itemSelector + ' .cart-item-price').html(response.item_total);
+      } else {
+        $(itemSelector).fadeOut(300, function () {
+          $(this).remove();
+        });
+      }
     }
+
+    refreshCartFragments();
   }
 
-  $('.qty-btn').on('click', function () {
+  // Increase or Decrease Quantity
+  $(document).on('click', '.qty-btn', function () {
     let cartItemKey = $(this).data('cart-item');
     let action = $(this).hasClass('increase') ? 'increase' : 'decrease';
 
@@ -63,7 +71,8 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  $('.delete-cart-item').on('click', function () {
+  // Remove Item
+  $(document).on('click', '.delete-cart-item', function () {
     let cartItemKey = $(this).data('cart-item');
 
     $.ajax({
@@ -80,4 +89,18 @@ jQuery(document).ready(function ($) {
       }
     });
   });
+
+  function refreshCartFragments() {
+    $.ajax({
+      type: 'POST',
+      url: custom_cart_ajax.ajax_url,
+      data: { action: 'refresh_cart_fragments' },
+      success: function (response) {
+        if (response.success) {
+          $('.cart-count').html(response.cart_count_html);
+          $('.cart-content').html(response.mini_cart_html);
+        }
+      }
+    });
+  }
 });

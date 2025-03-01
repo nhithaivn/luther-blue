@@ -254,7 +254,7 @@ function update_cart_count($fragments)
 function update_cart_item()
 {
   if (!isset($_POST['cart_item_key']) || !isset($_POST['operation'])) {
-    wp_send_json_error('Invalid request');
+    wp_send_json_error(['message' => 'Invalid request']);
   }
 
   $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
@@ -262,7 +262,7 @@ function update_cart_item()
   $cart = WC()->cart->get_cart();
 
   if (!isset($cart[$cart_item_key])) {
-    wp_send_json_error('Item not found');
+    wp_send_json_error(['message' => 'Item not found']);
   }
 
   $cart_item = $cart[$cart_item_key];
@@ -276,11 +276,12 @@ function update_cart_item()
 
   WC()->cart->calculate_totals();
   WC()->cart->set_session();
+  WC()->cart->maybe_set_cart_cookies();
 
   wp_send_json_success([
     'cart_item_key' => $cart_item_key,
     'cart_qty' => $new_qty,
-    'item_total' => wc_price(WC()->cart->get_cart_item($cart_item_key)['line_total'] ?? 0),
+    'item_total' => wc_price($cart[$cart_item_key]['line_total'] ?? 0),
     'cart_total' => WC()->cart->get_cart_total(),
     'cart_count' => WC()->cart->get_cart_contents_count()
   ]);
@@ -288,25 +289,46 @@ function update_cart_item()
 add_action('wp_ajax_update_cart_item', 'update_cart_item');
 add_action('wp_ajax_nopriv_update_cart_item', 'update_cart_item');
 
-add_action('wp_ajax_update_cart_item', 'update_cart_item');
-add_action('wp_ajax_nopriv_update_cart_item', 'update_cart_item');
 
 // Remove Item from Cart
 function remove_cart_item()
 {
   if (!isset($_POST['cart_item_key'])) {
-    wp_send_json_error('Invalid request');
+    wp_send_json_error(['message' => 'Invalid request']);
   }
 
   $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
   WC()->cart->remove_cart_item($cart_item_key);
+
   WC()->cart->calculate_totals();
   WC()->cart->set_session();
+  WC()->cart->maybe_set_cart_cookies();
 
   wp_send_json_success([
+    'cart_item_key' => $cart_item_key,
     'cart_total' => WC()->cart->get_cart_total(),
     'cart_count' => WC()->cart->get_cart_contents_count()
   ]);
 }
 add_action('wp_ajax_remove_cart_item', 'remove_cart_item');
 add_action('wp_ajax_nopriv_remove_cart_item', 'remove_cart_item');
+
+function refresh_cart_fragments()
+{
+  ob_start();
+?>
+  <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+<?php
+  $cart_count_html = ob_get_clean();
+
+  ob_start();
+  woocommerce_mini_cart();
+  $mini_cart_html = ob_get_clean();
+
+  wp_send_json_success([
+    'cart_count_html' => $cart_count_html,
+    'mini_cart_html' => $mini_cart_html
+  ]);
+}
+add_action('wp_ajax_refresh_cart_fragments', 'refresh_cart_fragments');
+add_action('wp_ajax_nopriv_refresh_cart_fragments', 'refresh_cart_fragments');
