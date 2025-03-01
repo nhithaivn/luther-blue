@@ -20,8 +20,8 @@
       SUB_MENU: '.sub-menu',
     },
     ARIA_LABELS: {
-      OPEN: 'Ouvrir le menu',
-      CLOSE: 'Fermer le menu',
+      OPEN: 'Open menu',
+      CLOSE: 'Close menu',
     },
   };
 
@@ -277,4 +277,12 @@ jQuery(document).ready(function ($) {
       btn.text(text.hasClass("expanded") ? "−" : "+");
     });
   }
+});
+
+
+jQuery(document).ready(function ($) {
+  // Toggle Mobile Menu
+  $('.site-nav__toggle').click(function () {
+    $('body').toggleClass('no-scroll');
+  });
 });

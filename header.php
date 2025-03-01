@@ -31,6 +31,7 @@
           <span class="close-top-bar" id="close-top-bar">&times;</span>
       </div>
     </div>
+    <div id="cart-overlay" class="cart-overlay"></div>
 
     <header class="site-header" id="masthead">
       <div class="site-header__container container">

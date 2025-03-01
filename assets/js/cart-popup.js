@@ -1,20 +1,33 @@
 
 jQuery(document).ready(function ($) {
-  // Open/Close popup
+  function isDesktop() {
+    return $(window).width() > 1024; // Adjust breakpoint as needed
+  }
+  // Open cart
   $('.cart-icon').click(function () {
-    $('#cart-popup').fadeIn();
+    $('#cart-popup, #cart-overlay').fadeIn();
+    $('body').addClass('no-scroll');
   });
 
-  $('.close-popup').click(function () {
-    $('#cart-popup').fadeOut();
+  // Close cart
+  $('.close-popup, #cart-overlay').click(function () {
+    $('#cart-popup, #cart-overlay').fadeOut();
+    $('body').removeClass('no-scroll');
   });
 
+  // Close Cart if clicking outside cart content  (only for desktop)
   $(document).mouseup(function (e) {
+    if (!isDesktop()) return; // Exit function if not on desktop
+
     if (!$("#cart-popup .cart-popup-content").is(e.target) && $("#cart-popup .cart-popup-content").has(e.target).length === 0) {
-      $("#cart-popup").fadeOut();
+      $("#cart-popup, #cart-overlay").fadeOut();
+      $('body').removeClass('no-scroll');
     }
   });
+});
 
+
+jQuery(document).ready(function ($) {
   // Update cart dynamically
   $(document.body).on('added_to_cart removed_from_cart', function () {
     $.ajax({
@@ -28,6 +41,7 @@ jQuery(document).ready(function ($) {
     });
   });
 });
+
 
 jQuery(document).ready(function ($) {
   function updateMiniCart(response) {
