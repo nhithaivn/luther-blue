@@ -42,10 +42,10 @@ jQuery(document).ready(function ($) {
 
 jQuery(document).ready(function ($) {
   $(".relate-product-slider").slick({
-    slidesToShow: 2.8,
+    // slidesToShow: 2.8, // not work with variableWidth
     slidesToScroll: 1,
     initialSlide: false,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 3000,
     dots: true,
     arrows: false,
