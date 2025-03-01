@@ -25,6 +25,12 @@
     <a class="skip-link screen-reader-text" href="#primary">
       <?php esc_html_e('Aller au contenu', 'wp-luther-blue'); ?>
     </a>
+    <div class="custom-top-bar" id="custom-top-bar">
+      <div class="container">
+        <p><?php echo get_theme_mod('custom_top_bar_text', 'Welcome to Our Website!'); ?>
+          <span class="close-top-bar" id="close-top-bar">&times;</span>
+      </div>
+    </div>
 
     <header class="site-header" id="masthead">
       <div class="site-header__container container">

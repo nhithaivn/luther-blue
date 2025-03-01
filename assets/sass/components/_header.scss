@@ -96,3 +96,27 @@
     top: 46px;
   }
 }
+
+// Top bar
+.custom-top-bar {
+  background: #333;
+  color: #fff;
+  padding: 9px 0 8px;
+  // font-family: Work Sans;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15.25px;
+  letter-spacing: -2%;
+  text-align: center;
+  position: relative;
+}
+
+.close-top-bar {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  cursor: pointer;
+  color: #fff;
+}

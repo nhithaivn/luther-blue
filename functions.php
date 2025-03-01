@@ -332,3 +332,48 @@ function refresh_cart_fragments()
 }
 add_action('wp_ajax_refresh_cart_fragments', 'refresh_cart_fragments');
 add_action('wp_ajax_nopriv_refresh_cart_fragments', 'refresh_cart_fragments');
+
+///
+function custom_top_bar_settings($wp_customize)
+{
+  $wp_customize->add_section('custom_top_bar_section', array(
+    'title' => 'Top Bar Settings',
+    'priority' => 30,
+  ));
+
+  $wp_customize->add_setting('custom_top_bar_text', array(
+    'default' => 'Welcome to Our Website!',
+    'sanitize_callback' => 'sanitize_text_field',
+  ));
+
+  $wp_customize->add_control('custom_top_bar_text_control', array(
+    'label' => 'Top Bar Text',
+    'section' => 'custom_top_bar_section',
+    'settings' => 'custom_top_bar_text',
+    'type' => 'text',
+  ));
+}
+add_action('customize_register', 'custom_top_bar_settings');
+
+function custom_top_bar_script()
+{
+?>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      let topBar = document.getElementById("custom-top-bar");
+      let closeBtn = document.getElementById("close-top-bar");
+
+      // Check if the user has closed the top bar before
+      if (localStorage.getItem("topBarClosed") === "true") {
+        topBar.style.display = "none";
+      }
+
+      closeBtn.addEventListener("click", function() {
+        topBar.style.display = "none";
+        localStorage.setItem("topBarClosed", "true"); // Remember the user's choice
+      });
+    });
+  </script>
+<?php
+}
+add_action('wp_footer', 'custom_top_bar_script');
