@@ -129,6 +129,7 @@
 
       .slick-track {
         flex-direction: row;
+        max-width: 100%;
 
         .slick-slide {
           border-left: 1px solid #000000;
@@ -578,6 +579,7 @@
       .relate-product-slider {
         .product-item {
           max-width: 213px;
+          margin-right: 74px;
 
           .product-image {
             width: 206px;

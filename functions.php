@@ -230,7 +230,7 @@ function add_login_logout_register_menu($items, $args)
 add_filter('wp_nav_menu_items', 'add_login_logout_register_menu', 199, 2);
 
 
-//Update cart
+//CUSTOM CART POPUP
 function custom_enqueue_scripts()
 {
   wp_enqueue_script('custom-mini-cart', get_template_directory_uri() . '/assets/js/cart-popup.js', array('jquery'), null, true);
