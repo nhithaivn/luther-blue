@@ -49,7 +49,7 @@ jQuery(document).ready(function ($) {
     autoplaySpeed: 3000,
     dots: true,
     arrows: false,
-
+    variableWidth: true,
     responsive: [{
       breakpoint: 1024,
       settings: {
