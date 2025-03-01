@@ -274,18 +274,20 @@ function update_cart_item()
     WC()->cart->remove_cart_item($cart_item_key);
   }
 
-  // **Recalculate totals before fetching new total**
   WC()->cart->calculate_totals();
-  WC()->cart->set_session(); // Ensure session updates
+  WC()->cart->set_session();
 
   wp_send_json_success([
     'cart_item_key' => $cart_item_key,
     'cart_qty' => $new_qty,
     'item_total' => wc_price(WC()->cart->get_cart_item($cart_item_key)['line_total'] ?? 0),
-    'cart_total' => WC()->cart->get_cart_total(), // Ensure latest cart total
+    'cart_total' => WC()->cart->get_cart_total(),
     'cart_count' => WC()->cart->get_cart_contents_count()
   ]);
 }
+add_action('wp_ajax_update_cart_item', 'update_cart_item');
+add_action('wp_ajax_nopriv_update_cart_item', 'update_cart_item');
+
 add_action('wp_ajax_update_cart_item', 'update_cart_item');
 add_action('wp_ajax_nopriv_update_cart_item', 'update_cart_item');
 
@@ -299,10 +301,9 @@ function remove_cart_item()
   $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
   WC()->cart->remove_cart_item($cart_item_key);
   WC()->cart->calculate_totals();
+  WC()->cart->set_session();
 
   wp_send_json_success([
-    'cart_item_key' => $cart_item_key,
-    'cart_qty' => 0,
     'cart_total' => WC()->cart->get_cart_total(),
     'cart_count' => WC()->cart->get_cart_contents_count()
   ]);
