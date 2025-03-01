@@ -92,11 +92,10 @@
       <div id="cart-popup" class="cart-popup">
         <div class="cart-popup-content">
           <p class="close-popup"><span class="text-close">TAP TO CLOSE THE CART</span><span class="icon-close">&times;</span></p>
-          <h3><span>Your Cart (<?php echo WC()->cart->get_cart_contents_count(); ?>)</span>
+          <h3>Your Cart (<span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
           </h3>
           <div class="cart-content">
             <?php woocommerce_mini_cart(); ?>
-
           </div>
         </div>
       </div>
